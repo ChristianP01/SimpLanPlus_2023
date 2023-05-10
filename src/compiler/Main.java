@@ -6,7 +6,6 @@ import parser.SimpLanPlusLexer;
 import parser.SimpLanPlusParser;
 
 import java.io.FileInputStream;
-import java.io.InputStream;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -33,10 +32,9 @@ public class Main {
         parser.removeErrorListeners();
         parser.addErrorListener(listener);
 
+        System.out.println("Starting parsing process...");
         // chiamata al parser
         parser.prog();
-
-        System.out.println("Starting parsing process...");
         listener.exportToFile(filename + "_lexicalErrors.txt");
         System.out.println("Finished parsing process. ");
 
