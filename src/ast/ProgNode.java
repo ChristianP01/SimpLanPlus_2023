@@ -1,28 +1,30 @@
 package ast;
 
-import semanticanalysis.STentry;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
 
-public class Type implements Node {
-    public static boolean isEqual(Type A, Type B) {
-        return A.getClass().equals(B.getClass());
+public class ProgNode implements Node {
+    private Node exp;
+
+    public ProgNode(Node exp) {
+        this.exp = exp;
     }
 
     @Override
     public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {
-        return null;
+        return exp.checkSemantics(symTable, nesting);
     }
 
     @Override
     public Type typeCheck() {
-        return null;
+        return exp.typeCheck();
     }
 
     @Override
     public String codeGeneration() {
-        return "";
+        // TODO implementare la generazione di codice
+        return null;
     }
 }

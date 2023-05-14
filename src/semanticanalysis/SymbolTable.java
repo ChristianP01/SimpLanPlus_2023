@@ -38,4 +38,5 @@ public class SymbolTable {
                 .filter(i -> this.symTable.get(i).containsKey(id))
                 .findFirst()
                 .orElse(-1);
+    }
 }
