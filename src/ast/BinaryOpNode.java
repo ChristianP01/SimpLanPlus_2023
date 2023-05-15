@@ -1,19 +1,21 @@
 package ast;
 
-import ast.types.IntType;
+import ast.types.ErrorType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
 
 public class BinaryOpNode implements Node {
-    private Node left;
-    private Node right;
-    private String opName;
+    protected final Node left;
+    protected final Node right;
+    private final Type type;
+    protected final String opName;
 
-    public BinaryOpNode(Node left, Node right, String opName) {
+    public BinaryOpNode(Node left, Node right, Type type, String opName) {
         this.left = left;
         this.right = right;
+        this.type = type;
         this.opName = opName;
     }
 
@@ -28,12 +30,11 @@ public class BinaryOpNode implements Node {
 
     @Override
     public Type typeCheck() {
-        if(this.left.typeCheck() instanceof IntType && this.right.typeCheck() instanceof IntType) {
-            return new IntType();
+        if(Type.isEqual(this.left.typeCheck(), this.type) && Type.isEqual(this.right.typeCheck(), this.type)) {
+            return this.type;
         } else {
-            // TODO aggiungere tipo errore
-            System.out.println("Type error: non integers in " + this.opName);
-            return new Type();
+            System.out.println("Type error: non-" + this.type.getClass().getName() + " in " + this.opName);
+            return new ErrorType();
         }
     }
 

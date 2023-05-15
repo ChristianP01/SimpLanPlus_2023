@@ -1,6 +1,6 @@
 package ast;
 
-public class SumNode extends BinaryOpNode {
+public class SumNode extends BinaryIntegerOpNode {
     public SumNode(Node left, Node right) {
         super(left, right, "addition");
     }
