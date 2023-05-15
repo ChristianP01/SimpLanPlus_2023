@@ -1,11 +1,13 @@
 package semanticanalysis;
 
+import ast.Type;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.IntStream;
 
 public class SymbolTable {
-    private final ArrayList<HashMap<String, STentry>> symTable;
+    private ArrayList<HashMap<String, STentry>> symTable;
 
     public SymbolTable() {
         this.symTable = new ArrayList<HashMap<String, STentry>>();
@@ -27,8 +29,12 @@ public class SymbolTable {
         this.symTable.add(hm);
     }
 
+    public void insert(String id, Type T, int nesting, String label) {
+
+    }
+
     // Check if symbol is in current env
-    public boolean top_lookup(String id) {
+    public boolean topLookup(String id) {
         return this.symTable.get(0).containsKey(id);
     }
 
