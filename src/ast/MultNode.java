@@ -1,6 +1,6 @@
 package ast;
 
-public class MultNode extends BinaryOpNode {
+public class MultNode extends BinaryIntegerOpNode {
     public MultNode(Node left, Node right) {
         super(left, right, "multiplication");
     }

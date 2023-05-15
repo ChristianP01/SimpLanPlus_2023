@@ -10,5 +10,4 @@ public class Environment {
         this.nestingLevel = 0;
         this.symbolTable = new SymbolTable();
     }
-
 }
