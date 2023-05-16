@@ -5,34 +5,30 @@ import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
 
-public class ProgDecNode extends ProgNode {
-
+public class BodyNode implements Node {
     private ArrayList<Node> dec;
     private ArrayList<Node> stm;
+    private Node exp;
 
-    public ProgDecNode(ArrayList<Node> dec, ArrayList<Node> stm, Node exp) {
-        super(exp);
-
+    public BodyNode(ArrayList<Node> dec, ArrayList<Node> stm, Node exp) {
         this.dec = dec;
         this.stm = stm;
+        this.exp = exp;
     }
 
     @Override
     public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {
+        ArrayList<SemanticError> errors = new ArrayList<>();
 
-        ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
-
-        for (Node d : this.dec) {
-            d.checkSemantics(symTable, nesting);
+        for (Node d : dec) {
             errors.addAll(d.checkSemantics(symTable, nesting));
         }
 
-        for (Node s : this.stm) {
-            s.checkSemantics(symTable, nesting);
+        for (Node s : stm) {
             errors.addAll(s.checkSemantics(symTable, nesting));
         }
 
-        errors.addAll(super.checkSemantics(symTable, nesting));
+        errors.addAll(exp.checkSemantics(symTable, nesting));
         return errors;
     }
 
@@ -43,8 +39,6 @@ public class ProgDecNode extends ProgNode {
 
     @Override
     public String codeGeneration() {
-        // TODO implementare la generazione di codice
         return null;
     }
-
 }

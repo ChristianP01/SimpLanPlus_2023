@@ -3,5 +3,10 @@ package ast.types;
 import ast.Type;
 
 public class ErrorType extends Type {
-    public ErrorType() { };
+    public ErrorType() { }
+
+    @Override
+    public String toString() {
+        return "ErrorType";
+    }
 }

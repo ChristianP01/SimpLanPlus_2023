@@ -11,20 +11,3 @@ public interface Node {
 
     String codeGeneration();
 }
-
-/**
- * 100 pushr A0
- * 108 jsub label
- * 112 
- *
- *
- * 9000 label:
- * ...
- *
- */
-
-FP
-xn
-x3
-x2
-x1

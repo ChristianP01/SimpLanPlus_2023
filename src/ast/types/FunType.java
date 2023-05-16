@@ -20,4 +20,9 @@ public class FunType extends Type {
     public Type getReturnType() {
         return returnType;
     }
+
+    @Override
+    public String toString() {
+        return "FunType";
+    }
 }

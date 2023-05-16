@@ -6,7 +6,7 @@ import semanticanalysis.SymbolTable;
 import java.util.ArrayList;
 
 public class ProgNode implements Node {
-    private Node exp;
+    protected Node exp;
 
     public ProgNode(Node exp) {
         this.exp = exp;

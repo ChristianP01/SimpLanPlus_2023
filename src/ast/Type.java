@@ -6,8 +6,23 @@ import semanticanalysis.SymbolTable;
 import java.util.ArrayList;
 
 public class Type implements Node {
+
+    public enum typeEnum {
+        Int,
+        Bool,
+        Fun,
+        Void,
+        Error
+    }
+
+    public typeEnum type;
+
     public static boolean isEqual(Type A, Type B) {
         return A.getClass().equals(B.getClass());
+    }
+
+    public String toString() {
+        return "Type: " + this.type.toString();
     }
 
     @Override
