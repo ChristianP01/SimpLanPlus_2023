@@ -19,9 +19,9 @@ public class DecNode implements Node {
         ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
         // controllo che non sia già stato dichiarato un identificatore con lo stesso nome
         if(symTable.topLookup(this.id)) {
-            errors.add(new SemanticError("Variabile " + this.id + " già dichiarata."));
+            errors.add(new SemanticError("Identifier " + this.id + " already declared in current scope."));
         } else {
-            // TODO inserimento nella symbol table del nuovo simbolo
+            symTable.insert(this.id, this.type);
         }
 
         return errors;

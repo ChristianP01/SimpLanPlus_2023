@@ -7,10 +7,8 @@ import semanticanalysis.SymbolTable;
 import java.util.ArrayList;
 
 public class FunDecNode implements Node {
-    private FunType type;
+    private FunType type; // FunType to compact params and return types
     private String id;
-
-
 
     @Override
     public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {

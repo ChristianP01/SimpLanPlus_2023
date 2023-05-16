@@ -1,13 +1,31 @@
 package semanticanalysis;
 
+import ast.Type;
+
+import java.util.HashMap;
+
 public class Environment {
+    private HashMap<String, STentry> environment;
+    private int nestingLevel;
+    // TODO vedere offset
+    private int offset;
 
-    int nestingLevel;
-    SymbolTable symbolTable;
+    public Environment(int nestingLevel) {
+        this.environment = new HashMap<String, STentry>();
+        this.nestingLevel = nestingLevel;
+        this.offset = 0;
+    }
 
-    public Environment() {
-        // Default nesting level
-        this.nestingLevel = 0;
-        this.symbolTable = new SymbolTable();
+    protected HashMap<String, STentry> getEnvironment() {
+        return this.environment;
+    }
+
+    public Type lookup(String id) {
+        return this.environment.get(id).getType();
+    }
+
+    public void insert(String id, Type type) {
+        // TODO vedere offset
+        this.environment.put(id, new STentry(type, this.nestingLevel, this.offset));
     }
 }

@@ -9,13 +9,15 @@ import java.util.ArrayList;
 public class BinaryOpNode implements Node {
     protected final Node left;
     protected final Node right;
-    private final Type type;
+    private final Type operandsType;
+    private final Type returnType;
     protected final String opName;
 
-    public BinaryOpNode(Node left, Node right, Type type, String opName) {
+    public BinaryOpNode(Node left, Node right, Type operandsType, Type returnType, String opName) {
         this.left = left;
         this.right = right;
-        this.type = type;
+        this.operandsType = operandsType;
+        this.returnType = returnType;
         this.opName = opName;
     }
 
@@ -30,10 +32,10 @@ public class BinaryOpNode implements Node {
 
     @Override
     public Type typeCheck() {
-        if(Type.isEqual(this.left.typeCheck(), this.type) && Type.isEqual(this.right.typeCheck(), this.type)) {
-            return this.type;
+        if(Type.isEqual(this.left.typeCheck(), this.operandsType) && Type.isEqual(this.right.typeCheck(), this.operandsType)) {
+            return this.returnType;
         } else {
-            System.out.println("Type error: non-" + this.type.getClass().getName() + " in " + this.opName);
+            System.out.println("Type mismatch: non-" + this.operandsType.getClass().getName() + " in " + this.opName);
             return new ErrorType();
         }
     }

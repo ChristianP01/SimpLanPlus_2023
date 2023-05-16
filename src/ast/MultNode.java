@@ -1,8 +1,10 @@
 package ast;
 
+import ast.types.IntType;
+
 public class MultNode extends BinaryIntegerOpNode {
     public MultNode(Node left, Node right) {
-        super(left, right, "multiplication");
+        super(left, right, new IntType(),"multiplication");
     }
 
     @Override

@@ -1,8 +1,10 @@
 package ast;
 
+import ast.types.IntType;
+
 public class SubNode extends BinaryIntegerOpNode {
     public SubNode(Node left, Node right) {
-        super(left, right, "subtraction");
+        super(left, right, new IntType(), "subtraction");
     }
 
     @Override

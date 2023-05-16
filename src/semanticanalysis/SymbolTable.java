@@ -1,50 +1,65 @@
 package semanticanalysis;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import ast.Type;
 import ast.types.ErrorType;
 
 public class SymbolTable {
-    private final ArrayList<HashMap<String, STentry>> symTable;
+    private final ArrayList<Environment> symTable;
+    private int currentNestingLevel;
 
     public SymbolTable() {
-        this.symTable = new ArrayList<HashMap<String, STentry>>();
+        this.symTable = new ArrayList<Environment>();
+        this.currentNestingLevel = 0;
     }
 
-    public SymbolTable(ArrayList<HashMap<String, STentry>> otherST) {
-        this.symTable = new ArrayList<HashMap<String, STentry>>();
+    public SymbolTable(ArrayList<Environment> otherST) {
+        this.symTable = new ArrayList<Environment>();
         this.symTable.addAll(otherST);
     }
 
-    public ArrayList<HashMap<String, STentry>> getSymbolTable() { return this.symTable; }
+    private void incrementCurrentNestingLevel() {
+        this.currentNestingLevel++;
+    }
+
+    private void decrementCurrentNestingLevel() {
+        this.currentNestingLevel--;
+    }
+
+    public ArrayList<Environment> getSymbolTable() { return this.symTable; }
 
     public void newScope() {
-        HashMap<String, STentry> scope = new HashMap<String, STentry>();
+        this.incrementCurrentNestingLevel();
+        Environment scope = new Environment(currentNestingLevel);
         this.symTable.add(scope);
     }
 
-    public void add(HashMap<String, STentry> hm) {
-        this.symTable.add(hm);
+    public void exitScope() {
+        this.symTable.remove(this.currentNestingLevel);
+        this.decrementCurrentNestingLevel();
     }
 
-    public void remove(HashMap<String, STentry> hm) {
-        this.symTable.remove(hm);
+    public void insert(String id, Type type) {
+        this.symTable.get(this.currentNestingLevel).insert(id, type);
     }
 
     // Check if symbol is in current env
-    public boolean top_lookup(String id) {
-        return this.symTable.get(0).containsKey(id);
+    public boolean topLookup(String id) {
+        return this.symTable.get(-1).lookup(id) != null;
     }
 
-    // Returns type of variable "id" (eventually) found in hm.
-    public Type lookup(HashMap<String, STentry> hm, String id) {
+    // Returns type of variable "id" (eventually) found.
+    public Type lookup(String id) {
+        Optional<Environment> maybeEnv = this.symTable.stream()
+                .sorted(Collections.reverseOrder())
+                .filter(e -> e.lookup(id) != null)
+                .findFirst();
 
-        if (hm.containsKey(id))
-                return hm.get(id).getType();
-        else
-            return new ErrorType();
+        return maybeEnv.isPresent() ? maybeEnv.get().lookup(id) : new ErrorType();
     }
 }

@@ -1,12 +1,11 @@
 package ast;
 
-import ast.types.ErrorType;
 import ast.types.IntType;
 
 public class BinaryIntegerOpNode extends BinaryOpNode {
 
-    public BinaryIntegerOpNode(Node left, Node right, String opName) {
-        super(left, right, new IntType(), opName);
+    public BinaryIntegerOpNode(Node left, Node right, Type returnType, String opName) {
+        super(left, right, new IntType(), returnType, opName);
     }
 
     @Override

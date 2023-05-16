@@ -1,6 +1,5 @@
 package ast;
 
-import semanticanalysis.STentry;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
