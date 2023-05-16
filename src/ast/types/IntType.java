@@ -7,6 +7,6 @@ public class IntType extends Type {
 
     @Override
     public String toString() {
-        return "IntType";
+        return "int";
     }
 }

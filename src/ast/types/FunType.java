@@ -3,6 +3,7 @@ package ast.types;
 import ast.Type;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class FunType extends Type {
     private ArrayList<Type> paramTypes;
@@ -23,6 +24,9 @@ public class FunType extends Type {
 
     @Override
     public String toString() {
-        return "FunType";
+        return "Function (" + this.paramTypes.stream()
+                .map(t -> t.toString())
+                .collect(Collectors.joining(", "))
+                + ") -> " + this.returnType.toString();
     }
 }
