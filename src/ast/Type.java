@@ -17,8 +17,9 @@ public class Type implements Node {
 
     public typeEnum type;
 
-    public static boolean isEqual(Type A, Type B) {
-        return A.getClass().equals(B.getClass());
+    // metodo statico per l'equivalenza tra tipi
+    public boolean isEqual(Type A) {
+        return this.getClass().equals(A.getClass());
     }
 
     public String toString() {
