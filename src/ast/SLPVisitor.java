@@ -1,7 +1,11 @@
 package ast;
 
+import ast.types.BoolType;
+import ast.types.IntType;
 import parser.SimpLanPlusBaseVisitor;
 import parser.SimpLanPlusParser;
+
+import java.util.Objects;
 
 public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
     @Override
@@ -71,27 +75,64 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
     @Override
     public Node visitVarExp(SimpLanPlusParser.VarExpContext ctx) {
-        return super.visitVarExp(ctx);
+        return new IdNode(ctx.ID().getText());
     }
 
     @Override
     public Node visitIntCompExp(SimpLanPlusParser.IntCompExpContext ctx) {
-        return super.visitIntCompExp(ctx);
+
+        Node left = visit(ctx.left);
+        Node right = visit(ctx.right);
+
+        switch (ctx.op.getText()) {
+            case ">" -> {
+                return new GreaterNode(left, right);
+            }
+
+            case "<" -> {
+                return new LessNode(left, right);
+            }
+
+            case ">=" -> {
+                return new GreaterEqualNode(left, right);
+            }
+
+            case "<=" -> {
+                return new LessEqualNode(left, right);
+            }
+
+            case "==" -> {
+                return new EqualNode(left, right);
+            }
+
+            default -> {
+                return null;
+            }
+        }
     }
 
     @Override
     public Node visitIfExp(SimpLanPlusParser.IfExpContext ctx) {
-        return super.visitIfExp(ctx);
+        Node condition = visit(ctx.cond);
+        Node thenBranch = visit(ctx.thenBranch);
+        Node elseBranch = visit(ctx.elseBranch);
+
+        return new IfNode(condition, thenBranch, elseBranch);
     }
 
     @Override
     public Node visitSumSubExp(SimpLanPlusParser.SumSubExpContext ctx) {
-        return super.visitSumSubExp(ctx);
+        Node left = visit(ctx.left);
+        Node right = visit(ctx.right);
+
+        return Objects.equals(ctx.op.getText(), "+") ? new SumNode(left, right) : new SubNode(left, right);
     }
 
     @Override
     public Node visitBoolBinExp(SimpLanPlusParser.BoolBinExpContext ctx) {
-
+        Node left = visit(ctx.left);
+        Node right = visit(ctx.right);
+        return Objects.equals(ctx.op.getText(), "&&") ? new AndNode(left, right) : new OrNode(left, right);
     }
 
     @Override
@@ -101,13 +142,15 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
     @Override
     public Node visitNegExp(SimpLanPlusParser.NegExpContext ctx) {
-        // TODO da implementare dopo aver scritto NegNode
-        return super.visitNegExp(ctx);
+        Node exp = visit(ctx.exp());
+        return new NegNode(exp);
     }
 
     @Override
     public Node visitMultDivExp(SimpLanPlusParser.MultDivExpContext ctx) {
-        return super.visitMultDivExp(ctx);
+        Node left = visit(ctx.left);
+        Node right = visit(ctx.right);
+        return Objects.equals(ctx.op.getText(), "*") ? new MultNode(left, right) : new DivNode(left, right);
     }
 
     @Override
