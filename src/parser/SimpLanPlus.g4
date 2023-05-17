@@ -1,11 +1,11 @@
 grammar SimpLanPlus ;
 
-prog   : exp                  				
-       | (dec)+ (stm)* (exp)?       
+prog   : exp                                                        #singleExpProg
+       | (dec)+ (stm)* (exp)?                                       #decStmExpProg
        ;
 
-dec    : type ID ';'                                   
-       | type ID '(' ( param ( ',' param)* )? ')' '{' body '}'
+dec    : type ID ';'                                                #varDec
+       | type ID '(' ( param ( ',' param)* )? ')' '{' body '}'      #funDec
        ;
          
 param  : type ID ;
@@ -13,26 +13,32 @@ param  : type ID ;
 body   : (dec)* (stm)* (exp)?
 	   ;
 
+ifbody : (stm)* exp
+       ;
+
+stmifbody : (stm)+
+          ;
+
 type   : 'int'  
        | 'bool' 
        | 'void'
        ;  
 
-stm    : ID '=' exp ';'
-       | ID '(' (exp (',' exp)* )? ')' ';'
-       | 'if' '(' exp ')' '{' (stm)+ '}' ('else' '{' (stm)+ '}')?
+stm    : ID '=' exp ';'                                             #assignStm
+       | ID '(' (exp (',' exp)* )? ')' ';'                          #funCallStm
+       | 'if' '(' cond=exp ')' '{' thenBranch=stmifbody '}' ('else' '{' elseBranch=stmifbody '}')?   #ifStm
 	   ;
            
-exp    :  INTEGER | 'true' | 'false'
-       | ID 
-       | '!' exp
-       | exp ('*' | '/') exp
-       | exp ('+' | '-') exp 
-       | exp ('>' | '<' | '>=' | '<=' | '==') exp 
-       | exp ('&&' | '||') exp 
-       | 'if' '(' exp ')' '{' (stm)* exp '}' 'else' '{' (stm)* exp '}' 
-       | '(' exp ')'
-       | ID '(' (exp (',' exp)* )? ')'
+exp    :  INTEGER #intExp | ('true' | 'false')                          #boolExp
+       | ID                                                             #varExp
+       | '!' exp                                                        #negExp
+       | left=exp ('*' | '/') right=exp                                            #multDivExp
+       | left=exp ('+' | '-') right=exp                                            #sumSubExp
+       | left=exp ('>' | '<' | '>=' | '<=' | '==') right=exp                       #intCompExp
+       | left=exp ('&&' | '||') right=exp                                          #boolBinExp
+       | 'if' '(' cond=exp ')' '{' thenBranch=ifbody '}' 'else' '{' elseBranch=ifbody '}'        #ifExp
+       | '(' exp ')'                                                    #baseExp
+       | ID '(' (exp (',' exp)* )? ')'                                  #funExp
        ;
  
 /*------------------------------------------------------------------
