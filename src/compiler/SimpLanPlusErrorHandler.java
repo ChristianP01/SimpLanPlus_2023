@@ -20,6 +20,10 @@ public class SimpLanPlusErrorHandler extends BaseErrorListener {
         errorList = new ArrayList<String>();
     }
 
+    public ArrayList<String> getErrorList() {
+        return this.errorList;
+    }
+
     @Override
     public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol,
                             int line, int charPositionInLine, String msg,

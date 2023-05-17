@@ -1,4 +1,4 @@
-// Generated from java-escape by ANTLR 4.11.1
+// Generated from /home/christian/Università/Magistrale/Compilatori/Progetto23/SimpLanPlus2023/SimpLanPlus_2023/src/parser/SimpLanPlus.g4 by ANTLR 4.12.0
 package parser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 

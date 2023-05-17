@@ -32,10 +32,10 @@ stm    : ID '=' exp ';'                                             #assignStm
 exp    :  INTEGER #intExp | ('true' | 'false')                          #boolExp
        | ID                                                             #varExp
        | '!' exp                                                        #negExp
-       | left=exp ('*' | '/') right=exp                                            #multDivExp
-       | left=exp ('+' | '-') right=exp                                            #sumSubExp
-       | left=exp ('>' | '<' | '>=' | '<=' | '==') right=exp                       #intCompExp
-       | left=exp ('&&' | '||') right=exp                                          #boolBinExp
+       | left=exp op=('*' | '/') right=exp                                            #multDivExp
+       | left=exp op=('+' | '-') right=exp                                            #sumSubExp
+       | left=exp op=('>' | '<' | '>=' | '<=' | '==') right=exp                       #intCompExp
+       | left=exp op=('&&' | '||') right=exp                                          #boolBinExp
        | 'if' '(' cond=exp ')' '{' thenBranch=ifbody '}' 'else' '{' elseBranch=ifbody '}'        #ifExp
        | '(' exp ')'                                                    #baseExp
        | ID '(' (exp (',' exp)* )? ')'                                  #funExp
