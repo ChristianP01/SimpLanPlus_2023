@@ -8,20 +8,10 @@ import java.util.ArrayList;
 
 public class BinaryBooleanOpNode extends BinaryOpNode {
 
-    private enum operationCode {
-        GreaterThan,
-        LessThan,
-        GreaterEqualThan,
-        LessEqualThan,
-        EqualThan,
-        And,
-        Or
-    }
+    private String opCode;
 
-    private operationCode opCode;
-
-    public BinaryBooleanOpNode(Node left, Node right, Type returnType, operationCode opCode) {
-        super(left, right, new BoolType(), returnType, opCode.toString());
+    public BinaryBooleanOpNode(Node left, Node right, Type returnType, String opCode) {
+        super(left, right, new BoolType(), returnType, opCode);
     }
 
     @Override

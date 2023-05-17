@@ -7,18 +7,10 @@ import semanticanalysis.SymbolTable;
 import java.util.ArrayList;
 
 public class BinaryIntegerOpNode extends BinaryOpNode {
+    private String opCode;
 
-    private enum operationCode {
-        Addition,
-        Substraction,
-        Multiplication,
-        Division
-    }
-
-    private operationCode opCode;
-
-    public BinaryIntegerOpNode(Node left, Node right, Type returnType, operationCode opCode) {
-        super(left, right, new IntType(), returnType, opCode.toString());
+    public BinaryIntegerOpNode(Node left, Node right, Type returnType, String opCode) {
+        super(left, right, new IntType(), returnType, opCode);
     }
 
     @Override
