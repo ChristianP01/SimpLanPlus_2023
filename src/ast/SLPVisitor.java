@@ -1,12 +1,8 @@
 package ast;
 
-import ast.types.BoolType;
-import ast.types.IntType;
 import parser.SimpLanPlusBaseVisitor;
 import parser.SimpLanPlusParser;
-
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
@@ -43,7 +39,17 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
     @Override
     public Node visitFunDec(SimpLanPlusParser.FunDecContext ctx) {
-        return super.visitFunDec(ctx);
+        String id = ctx.ID().getText();
+        ArrayList<Node> params = new ArrayList<>();
+        Type type = (Type) visit(ctx.type());
+
+        for (SimpLanPlusParser.ParamContext param : ctx.param()) {
+            params.add(visit(param));
+        }
+
+        BodyNode body = (BodyNode) visit(ctx.body());
+
+        return new DecFunNode(type, id, params, body);
     }
 
     @Override
@@ -187,7 +193,13 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
     @Override
     public Node visitFunExp(SimpLanPlusParser.FunExpContext ctx) {
-        return super.visitFunExp(ctx);
+        String id = ctx.ID().getText();
+        ArrayList<Node> params = new ArrayList<>();
+
+        for (SimpLanPlusParser.ExpContext exp : ctx.exp()) {
+            params.add(visit(exp));
+        }
+        return new FunNode(id, params);
     }
 
     @Override
