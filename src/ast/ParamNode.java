@@ -6,16 +6,16 @@ import semanticanalysis.SymbolTable;
 import java.util.ArrayList;
 
 public class ParamNode implements Node {
-    private Type type;
+    private Node type;
     private String id;
 
-    public ParamNode(Type type, String id) {
+    public ParamNode(Node type, String id) {
         this.type = type;
         this.id = id;
     }
 
     public Type getType() {
-        return type;
+        return (Type) this.type;
     }
 
     public String getId() {

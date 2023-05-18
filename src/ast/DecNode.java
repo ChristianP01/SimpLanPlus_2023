@@ -6,10 +6,10 @@ import semanticanalysis.SymbolTable;
 import java.util.ArrayList;
 
 public class DecNode implements Node {
-    private Type type;
+    private Node type;
     private String id;
 
-    public DecNode(Type type, String id) {
+    public DecNode(Node type, String id) {
         this.type = type;
         this.id = id;
     }
@@ -21,7 +21,7 @@ public class DecNode implements Node {
         if(symTable.topLookup(this.id)) {
             errors.add(new SemanticError("Identifier " + this.id + " already declared in current scope."));
         } else {
-            symTable.insert(this.id, this.type);
+            symTable.insert(this.id, (Type) this.type);
         }
 
         return errors;

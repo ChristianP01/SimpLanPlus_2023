@@ -15,7 +15,8 @@ public class IdNode implements Node {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {
-        // non ritorna errori semantici, ritorna una lista vuota
+        // TODO controllare che la variabile sia stata inizializzata
+
         return new ArrayList<SemanticError>();
     }
 

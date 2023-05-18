@@ -5,22 +5,40 @@ import ast.types.IntType;
 import parser.SimpLanPlusBaseVisitor;
 import parser.SimpLanPlusParser;
 
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
     @Override
     public Node visitSingleExpProg(SimpLanPlusParser.SingleExpProgContext ctx) {
-        return super.visitSingleExpProg(ctx);
+        Node exp = visit(ctx.exp());
+        return new ProgNode(exp);
     }
 
     @Override
     public Node visitDecStmExpProg(SimpLanPlusParser.DecStmExpProgContext ctx) {
-        return super.visitDecStmExpProg(ctx);
+        // visita di ogni dichiarazione, inserimento dei corrispondenti nodi in un ArrayList
+        ArrayList<Node> decs = ctx.dec().stream()
+                .map(this::visit)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        // visita di ogni statement (se presenti), inserimento dei corrispondenti nodi in un ArrayList
+        ArrayList<Node> stms = ctx.stm().stream()
+                .map(this::visit)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        Node exp = visit(ctx.exp());
+
+        return new ProgDecNode(decs, stms, exp);
     }
 
     @Override
     public Node visitVarDec(SimpLanPlusParser.VarDecContext ctx) {
-        return super.visitVarDec(ctx);
+        Type type = (Type) visit(ctx.type());
+        String id = ctx.ID().getText();
+
+        return new DecNode(type, id);
     }
 
     @Override
@@ -30,7 +48,10 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
     @Override
     public Node visitParam(SimpLanPlusParser.ParamContext ctx) {
-        return super.visitParam(ctx);
+        Node type = visit(ctx.type());
+        String id = ctx.ID().getText();
+
+        return new ParamNode(type, id);
     }
 
     @Override
@@ -65,17 +86,28 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
     @Override
     public Node visitIfStm(SimpLanPlusParser.IfStmContext ctx) {
-        return super.visitIfStm(ctx);
+        Node cond = visit(ctx.cond);
+        ArrayList<Node> thenStms = ctx.thenBranch.stm().stream()
+                .map(s -> visit(s))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        ArrayList<Node> elseStms = ctx.elseBranch.stm().stream()
+                .map(s -> visit(s))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        return new IfNode(cond, thenStms, elseStms);
     }
 
     @Override
     public Node visitBaseExp(SimpLanPlusParser.BaseExpContext ctx) {
-        return super.visitBaseExp(ctx);
+        return visit(ctx.exp());
     }
 
     @Override
     public Node visitVarExp(SimpLanPlusParser.VarExpContext ctx) {
-        return new IdNode(ctx.ID().getText());
+        String id = ctx.ID().getText();
+
+        return new IdNode(id);
     }
 
     @Override
