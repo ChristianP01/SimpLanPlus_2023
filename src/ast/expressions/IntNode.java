@@ -1,30 +1,34 @@
-package ast;
+package ast.expressions;
 
+import ast.Node;
+import ast.Type;
 import ast.types.IntType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
 
-public class BinaryIntegerOpNode extends BinaryOpNode {
-    private String opCode;
+public class IntNode implements Node {
+    private int value;
 
-    public BinaryIntegerOpNode(Node left, Node right, Type returnType, String opCode) {
-        super(left, right, new IntType(), returnType, opCode);
+    public IntNode(int value) {
+        this.value = value;
     }
 
     @Override
     public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {
-        return super.checkSemantics(symTable, nesting);
+        // non ritorna errori semantici, ritorna una lista vuota
+        return new ArrayList<SemanticError>();
     }
 
     @Override
     public Type typeCheck() {
-        return super.typeCheck();
+        return new IntType();
     }
 
     @Override
     public String codeGeneration() {
+        // TODO implementare la generazione di codice
         return null;
     }
 }

@@ -6,11 +6,13 @@ public class STentry {
 
     private Type type;
     private int nestingLevel;
+    private boolean initialized;
     private int offset; // int=4, bool=1
 
-    public STentry(Type type, int nestingLevel, int offset) {
+    public STentry(Type type, int nestingLevel, boolean initialized, int offset) {
         this.type = type;
         this.nestingLevel = nestingLevel;
+        this.initialized = initialized;
         this.offset = offset;
     }
 

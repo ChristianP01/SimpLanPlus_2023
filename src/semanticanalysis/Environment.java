@@ -26,6 +26,7 @@ public class Environment {
 
     public void insert(String id, Type type) {
         // TODO vedere offset
-        this.environment.put(id, new STentry(type, this.nestingLevel, this.offset));
+        // il valore initialized è impostato a false
+        this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset));
     }
 }

@@ -1,32 +1,33 @@
-package ast;
+package ast.expressions;
 
+import ast.Node;
+import ast.Type;
 import ast.types.BoolType;
+import ast.types.ErrorType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
 
-public class BoolNode implements Node {
-    private boolean value;
+public class NegNode implements Node {
+    private Node exp;
 
-    public BoolNode(boolean value) {
-        this.value = value;
+    public NegNode(Node exp) {
+        this.exp = exp;
     }
 
     @Override
     public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {
-        // non ritorna errori semantici, ritorna una lista vuota
-        return new ArrayList<SemanticError>();
+        return exp.checkSemantics(symTable, nesting);
     }
 
     @Override
     public Type typeCheck() {
-        return new BoolType();
+        return exp.typeCheck().isEqual(new BoolType()) ? new BoolType() : new ErrorType();
     }
 
     @Override
     public String codeGeneration() {
-        // TODO implementare la generazione di codice
         return null;
     }
 }

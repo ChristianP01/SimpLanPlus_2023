@@ -28,6 +28,7 @@ public class BodyNode implements Node {
             errors.addAll(s.checkSemantics(symTable, nesting));
         }
 
+        // TODO controllare se exp è vuota
         errors.addAll(exp.checkSemantics(symTable, nesting));
         return errors;
     }

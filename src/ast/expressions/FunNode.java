@@ -1,5 +1,8 @@
-package ast;
+package ast.expressions;
 
+import ast.Node;
+import ast.Type;
+import ast.expressions.IdNode;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 

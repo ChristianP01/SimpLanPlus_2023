@@ -1,15 +1,17 @@
-package ast;
+package ast.expressions;
 
-import ast.types.IntType;
+import ast.Node;
+import ast.Type;
+import ast.types.BoolType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
 
-public class IntNode implements Node {
-    private int value;
+public class BoolNode implements Node {
+    private boolean value;
 
-    public IntNode(int value) {
+    public BoolNode(boolean value) {
         this.value = value;
     }
 
@@ -21,7 +23,7 @@ public class IntNode implements Node {
 
     @Override
     public Type typeCheck() {
-        return new IntType();
+        return new BoolType();
     }
 
     @Override

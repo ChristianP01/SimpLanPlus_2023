@@ -1,5 +1,7 @@
 package ast;
 
+import ast.expressions.*;
+import ast.statements.IfStmNode;
 import parser.SimpLanPlusBaseVisitor;
 import parser.SimpLanPlusParser;
 import java.util.*;
@@ -39,6 +41,7 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
     @Override
     public Node visitFunDec(SimpLanPlusParser.FunDecContext ctx) {
+        // TODO
         String id = ctx.ID().getText();
         ArrayList<Node> params = new ArrayList<>();
         Type type = (Type) visit(ctx.type());
@@ -92,6 +95,7 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
     @Override
     public Node visitIfStm(SimpLanPlusParser.IfStmContext ctx) {
+        // TODO controllare che il ramo else sia presente
         Node cond = visit(ctx.cond);
         ArrayList<Node> thenStms = ctx.thenBranch.stm().stream()
                 .map(s -> visit(s))
@@ -101,7 +105,7 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
                 .map(s -> visit(s))
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        return new IfNode(cond, thenStms, elseStms);
+        return new IfStmNode(cond, thenStms, elseStms);
     }
 
     @Override

@@ -1,5 +1,8 @@
-package ast;
+package ast.expressions;
 
+import ast.Node;
+import ast.Type;
+import ast.types.ErrorType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
@@ -15,7 +18,10 @@ public class IdNode implements Node {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {
-        // TODO controllare che la variabile sia stata inizializzata
+        ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
+        if(symTable.lookup(this.id).isEqual(new ErrorType())) {
+            errors.add(new SemanticError("Variabile " + this.id + " non dichiarata"));
+        }
 
         return new ArrayList<SemanticError>();
     }

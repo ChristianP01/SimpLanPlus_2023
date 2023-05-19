@@ -1,5 +1,6 @@
-package ast;
+package ast.expressions;
 
+import ast.Node;
 import ast.types.BoolType;
 
 public class OrNode extends BinaryBooleanOpNode {

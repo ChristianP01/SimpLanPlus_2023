@@ -1,16 +1,17 @@
-package ast;
+package ast.expressions;
 
+import ast.Node;
+import ast.Type;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
 
-public class GreaterEqualNode implements Node {
-
+public class GreaterNode implements Node {
     private Node left;
     private Node right;
 
-    public GreaterEqualNode(Node left, Node right) {
+    public GreaterNode(Node left, Node right) {
         this.left = left;
         this.right = right;
     }

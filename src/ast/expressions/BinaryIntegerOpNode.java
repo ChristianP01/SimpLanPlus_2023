@@ -1,17 +1,18 @@
-package ast;
+package ast.expressions;
 
-import ast.types.BoolType;
+import ast.Node;
+import ast.Type;
+import ast.types.IntType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
 
-public class BinaryBooleanOpNode extends BinaryOpNode {
-
+public class BinaryIntegerOpNode extends BinaryOpNode {
     private String opCode;
 
-    public BinaryBooleanOpNode(Node left, Node right, Type returnType, String opCode) {
-        super(left, right, new BoolType(), returnType, opCode);
+    public BinaryIntegerOpNode(Node left, Node right, Type returnType, String opCode) {
+        super(left, right, new IntType(), returnType, opCode);
     }
 
     @Override
@@ -26,6 +27,6 @@ public class BinaryBooleanOpNode extends BinaryOpNode {
 
     @Override
     public String codeGeneration() {
-        return "";
+        return null;
     }
 }
