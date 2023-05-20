@@ -13,6 +13,8 @@ public class EqualNode implements Node {
     private Node right;
 
     public EqualNode(Node left, Node right) {
+        this.left = left;
+        this.right = right;
     }
 
     @Override

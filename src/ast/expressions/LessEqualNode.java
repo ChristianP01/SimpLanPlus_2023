@@ -2,28 +2,16 @@ package ast.expressions;
 
 import ast.Node;
 import ast.Type;
+import ast.types.BoolType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
 
-public class LessEqualNode implements Node {
-    private Node left;
-    private Node right;
-
+public class LessEqualNode extends BinaryIntegerOpNode {
     public LessEqualNode(Node left, Node right) {
-        this.left = left;
-        this.right = right;
-    }
+        super(left, right, new BoolType(), "<=");
 
-    @Override
-    public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {
-        return null;
-    }
-
-    @Override
-    public Type typeCheck() {
-        return null;
     }
 
     @Override

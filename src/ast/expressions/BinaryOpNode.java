@@ -37,7 +37,7 @@ public class BinaryOpNode implements Node {
         if(this.left.typeCheck().isEqual(this.operandsType) && this.right.typeCheck().isEqual(this.operandsType)) {
             return this.returnType;
         } else {
-            System.out.println("Type mismatch: non-" + this.operandsType.getClass().getName() + " in " + this.opName);
+            System.out.println("Type mismatch: non-" + this.operandsType.toString() + " in " + this.opName);
             return new ErrorType();
         }
     }
