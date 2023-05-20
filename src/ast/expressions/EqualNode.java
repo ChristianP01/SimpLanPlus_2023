@@ -2,9 +2,13 @@ package ast.expressions;
 
 import ast.Node;
 import ast.Type;
+import ast.types.BoolType;
+import ast.types.ErrorType;
+import ast.types.VoidType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class EqualNode implements Node {
@@ -19,12 +23,31 @@ public class EqualNode implements Node {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {
-        return null;
+        ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
+
+        errors.addAll(this.left.checkSemantics(symTable, nesting));
+        errors.addAll(this.right.checkSemantics(symTable, nesting));
+
+        return errors;
     }
 
     @Override
     public Type typeCheck() {
-        return null;
+        Type leftType = left.typeCheck();
+        Type rightType = right.typeCheck();
+        // si controlla per prima cosa che entrambi gli operandi non siano void o funzioni
+        if(leftType instanceof BoolType || leftType instanceof VoidType) {
+            System.out.println("Cannot compare expressions of type " + leftType.toString() + ".");
+            return new ErrorType();
+        } else if(rightType instanceof BoolType || rightType instanceof VoidType) {
+            System.out.println("Cannot compare expressions of type " + rightType.toString() + ".");
+            return new ErrorType();
+        } else if(!leftType.isEqual(rightType)) {
+            System.out.println("Cannot compare expressions of different types, got " + leftType.toString() +
+                    " and " + rightType.toString() + ".");
+        }
+
+        return new BoolType();
     }
 
     @Override
