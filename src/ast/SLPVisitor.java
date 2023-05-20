@@ -1,5 +1,7 @@
 package ast;
 
+import ast.declarations.DecFunNode;
+import ast.declarations.DecNode;
 import ast.expressions.*;
 import ast.statements.IfStmNode;
 import parser.SimpLanPlusBaseVisitor;
@@ -60,7 +62,7 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
         Node type = visit(ctx.type());
         String id = ctx.ID().getText();
 
-        return new ParamNode(type, id);
+        return new DecNode(type, id);
     }
 
     @Override
@@ -70,7 +72,15 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
     @Override
     public Node visitIfbody(SimpLanPlusParser.IfbodyContext ctx) {
-        return super.visitIfbody(ctx);
+        // visita degli statements
+        ArrayList<Node> stms = ctx.stm().stream()
+                .map(this::visit)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        // visita dell'espressione
+        Node exp = visit(ctx.exp());
+
+        return new IfBodyNode(stms, exp);
     }
 
     @Override

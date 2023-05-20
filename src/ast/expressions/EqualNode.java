@@ -42,6 +42,7 @@ public class EqualNode implements Node {
         } else if(rightType instanceof BoolType || rightType instanceof VoidType) {
             System.out.println("Cannot compare expressions of type " + rightType.toString() + ".");
             return new ErrorType();
+            // se i tipi non combaciano, si ritorna errore
         } else if(!leftType.isEqual(rightType)) {
             System.out.println("Cannot compare expressions of different types, got " + leftType.toString() +
                     " and " + rightType.toString() + ".");

@@ -1,5 +1,8 @@
-package ast;
+package ast.declarations;
 
+import ast.Node;
+import ast.Type;
+import ast.types.VoidType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
@@ -29,7 +32,7 @@ public class DecNode implements Node {
 
     @Override
     public Type typeCheck() {
-        return null;
+        return new VoidType();
     }
 
     @Override
