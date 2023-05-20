@@ -7,7 +7,7 @@ public class STentry {
     private Type type;
     private int nestingLevel;
     private boolean initialized;
-    private int offset; // int=4, bool=1
+    private int offset;
 
     public STentry(Type type, int nestingLevel, boolean initialized, int offset) {
         this.type = type;

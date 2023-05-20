@@ -2,6 +2,7 @@ package ast.statements;
 
 import ast.Node;
 import ast.Type;
+import ast.expressions.IdNode;
 import ast.types.ErrorType;
 import ast.types.VoidType;
 import semanticanalysis.SemanticError;
@@ -22,8 +23,13 @@ public class AssgnNode implements Node {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {
+        // TODO modificare per aggiungere alla symbol table che la variabile è ora utilizzata
+        ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
 
-        return new ArrayList<SemanticError>();
+        errors.addAll(this.id.checkSemantics(symTable, nesting));
+        errors.addAll(this.exp.checkSemantics(symTable, nesting));
+
+        return errors;
     }
 
     @Override

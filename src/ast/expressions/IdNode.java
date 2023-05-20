@@ -3,6 +3,9 @@ package ast.expressions;
 import ast.Node;
 import ast.Type;
 import ast.types.ErrorType;
+import ast.types.FunType;
+import ast.types.VoidType;
+import semanticanalysis.STentry;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
@@ -11,6 +14,7 @@ import java.util.ArrayList;
 public class IdNode implements Node {
 
     private String id;
+    private STentry semanticData;
 
     public IdNode(String id) {
         this.id = id;
@@ -19,8 +23,13 @@ public class IdNode implements Node {
     @Override
     public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {
         ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
-        if(symTable.lookup(this.id).isEqual(new ErrorType())) {
-            errors.add(new SemanticError("Variabile " + this.id + " non dichiarata"));
+
+        // inserisco la STentry dell'id nel campo corrispondente
+        this.semanticData = symTable.lookup(this.id);
+
+        // se la funzione lookup non ha ritornato nulla, allora la variabile non è stata definita
+        if(this.semanticData == null) {
+            errors.add(new SemanticError("Variable " + this.id + " not declared."));
         }
 
         return new ArrayList<SemanticError>();
@@ -28,7 +37,15 @@ public class IdNode implements Node {
 
     @Override
     public Type typeCheck() {
-        return null;
+        // se non sono state inserite informazioni sulla semantica durante l'analisi semantica,
+        // la variabile non è stata definita e si ritorna errore
+        if(this.semanticData == null) return new ErrorType();
+
+        // se il tipo dell'identificativo è funzione o void ritorna errore
+        Type idType = this.semanticData.getType();
+        if(idType instanceof FunType || idType instanceof VoidType) return new ErrorType();
+
+        return idType;
     }
 
     @Override

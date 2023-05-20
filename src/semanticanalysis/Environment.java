@@ -20,8 +20,8 @@ public class Environment {
         return this.environment;
     }
 
-    public Type lookup(String id) {
-        return this.environment.get(id).getType();
+    public STentry lookup(String id) {
+        return this.environment.get(id);
     }
 
     public void insert(String id, Type type) {

@@ -54,12 +54,12 @@ public class SymbolTable {
     }
 
     // Returns type of variable "id" (eventually) found.
-    public Type lookup(String id) {
+    public STentry lookup(String id) {
         Optional<Environment> maybeEnv = this.symTable.stream()
                 .sorted(Collections.reverseOrder())
                 .filter(e -> e.lookup(id) != null)
                 .findFirst();
 
-        return maybeEnv.isPresent() ? maybeEnv.get().lookup(id) : new ErrorType();
+        return maybeEnv.isPresent() ? maybeEnv.get().lookup(id) : null;
     }
 }

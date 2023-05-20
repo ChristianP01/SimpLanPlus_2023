@@ -203,7 +203,7 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
         for (SimpLanPlusParser.ExpContext exp : ctx.exp()) {
             params.add(visit(exp));
         }
-        return new FunNode(id, params);
+        return new FunCallNode(id, params);
     }
 
     @Override
