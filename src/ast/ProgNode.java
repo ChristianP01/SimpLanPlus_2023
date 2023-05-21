@@ -28,4 +28,9 @@ public class ProgNode implements Node {
         // TODO implementare la generazione di codice
         return null;
     }
+
+    @Override
+    public String toPrint(String s) {
+        return "Prog\n" + this.exp.toPrint("\t");
+    }
 }

@@ -23,12 +23,14 @@ public class Main {
             return;
         }
 
+        // inizializzaziond di lexer, parser e visitor
         ANTLRInputStream inputStream = new ANTLRInputStream(sourceFile);
         SimpLanPlusLexer lexer = new SimpLanPlusLexer(inputStream);
         CommonTokenStream tokenList = new CommonTokenStream(lexer);
         SimpLanPlusParser parser = new SimpLanPlusParser(tokenList);
         SLPVisitor visitor = new SLPVisitor();
 
+        // introduzione del listener per gli errori lessicali e sintattici
         SimpLanPlusErrorHandler listener = new SimpLanPlusErrorHandler();
         lexer.removeErrorListeners();
         lexer.addErrorListener(listener);
@@ -37,8 +39,13 @@ public class Main {
         parser.addErrorListener(listener);
 
         System.out.println("Starting parsing process...");
-        // chiamata al parser
+
+        // visita dell'albero concreto e ottenimento dell'ast
         Node ast = visitor.visit(parser.prog());
+        // stampa dell'ast
+        System.out.println(ast.toPrint(""));
+
+        // scrittura su file degli errori lessicali
         listener.exportToFile(filename + "_lexicalErrors.txt");
         System.out.println("Finished parsing process. ");
 

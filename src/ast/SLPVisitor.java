@@ -3,9 +3,10 @@ package ast;
 import ast.declarations.DecFunNode;
 import ast.declarations.DecNode;
 import ast.expressions.*;
+import ast.statements.AssgnNode;
+import ast.statements.FunCallStmNode;
 import ast.statements.IfStmNode;
-import ast.types.FunType;
-import ast.types.Type;
+import ast.types.*;
 import parser.SimpLanPlusBaseVisitor;
 import parser.SimpLanPlusParser;
 import java.util.*;
@@ -86,6 +87,7 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
     @Override
     public Node visitBody(SimpLanPlusParser.BodyContext ctx) {
+        // non utilizzato
         return super.visitBody(ctx);
     }
 
@@ -104,34 +106,51 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
     @Override
     public Node visitStmifbody(SimpLanPlusParser.StmifbodyContext ctx) {
+        // non utilizzato
         return super.visitStmifbody(ctx);
     }
 
     @Override
     public Node visitType(SimpLanPlusParser.TypeContext ctx) {
-        return super.visitType(ctx);
+        String typeName = ctx.getText();
+        Node type = switch (typeName) {
+            case "int" -> new IntType();
+            case "bool" -> new BoolType();
+            case "void" -> new VoidType();
+            default -> null;
+        };
+
+        return type;
     }
 
     @Override
     public Node visitAssignStm(SimpLanPlusParser.AssignStmContext ctx) {
-        return super.visitAssignStm(ctx);
+        String id = ctx.ID().getText();
+        Node exp = visit(ctx.exp());
+        return new AssgnNode(id, exp);
     }
 
     @Override
     public Node visitFunCallStm(SimpLanPlusParser.FunCallStmContext ctx) {
-        return super.visitFunCallStm(ctx);
+        String id = ctx.ID().getText();
+        ArrayList<Node> params = new ArrayList<>();
+
+        for (SimpLanPlusParser.ExpContext exp : ctx.exp()) {
+            params.add(visit(exp));
+        }
+
+        return new FunCallStmNode(id, params);
     }
 
     @Override
     public Node visitIfStm(SimpLanPlusParser.IfStmContext ctx) {
-        // TODO controllare che il ramo else sia presente
         Node cond = visit(ctx.cond);
         ArrayList<Node> thenStms = ctx.thenBranch.stm().stream()
-                .map(s -> visit(s))
+                .map(this::visit)
                 .collect(Collectors.toCollection(ArrayList::new));
 
         ArrayList<Node> elseStms = ctx.elseBranch.stm().stream()
-                .map(s -> visit(s))
+                .map(this::visit)
                 .collect(Collectors.toCollection(ArrayList::new));
 
         return new IfStmNode(cond, thenStms, elseStms);

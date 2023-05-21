@@ -6,6 +6,7 @@ import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ProgDecNode implements Node {
     private ArrayList<Node> dec;
@@ -49,6 +50,16 @@ public class ProgDecNode implements Node {
     public String codeGeneration() {
         // TODO implementare la generazione di codice
         return null;
+    }
+
+    @Override
+    public String toPrint(String s) {
+        String print = "ProgDec\n";
+        print.concat(this.dec.stream().map(d -> d.toPrint("\t")).collect(Collectors.joining("\n")));
+        print += this.stm.stream().map(st -> st.toPrint("\t")).collect(Collectors.joining("\n"));
+        print += this.exp.toPrint("\t");
+
+        return print;
     }
 
 }

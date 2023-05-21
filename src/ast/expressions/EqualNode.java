@@ -55,4 +55,9 @@ public class EqualNode implements Node {
     public String codeGeneration() {
         return null;
     }
+
+    @Override
+    public String toPrint(String s) {
+        return s + "==\n" + this.left.toPrint(s + "\t") + this.right.toPrint(s + "\t");
+    }
 }

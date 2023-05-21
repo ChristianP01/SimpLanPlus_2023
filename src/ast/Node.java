@@ -7,8 +7,10 @@ import semanticanalysis.SymbolTable;
 import java.util.ArrayList;
 
 public interface Node {
-    ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting);
-    Type typeCheck();
+    public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting);
+    public Type typeCheck();
 
-    String codeGeneration();
+    public String codeGeneration();
+
+    public String toPrint(String s);
 }

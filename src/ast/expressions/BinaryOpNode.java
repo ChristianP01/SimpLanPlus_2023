@@ -49,4 +49,9 @@ public class BinaryOpNode implements Node {
     public String codeGeneration() {
         return null;
     }
+
+    @Override
+    public String toPrint(String s) {
+        return s + this.opName + "\n" + this.left.toPrint(s + "\t") + this.right.toPrint(s + "\t");
+    }
 }

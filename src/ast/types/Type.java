@@ -29,4 +29,9 @@ public abstract class Type implements Node {
     public String codeGeneration() {
         return null;
     }
+
+    @Override
+    public String toPrint(String s) {
+        return "";
+    }
 }

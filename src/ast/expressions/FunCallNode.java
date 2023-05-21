@@ -9,6 +9,7 @@ import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class FunCallNode implements Node {
@@ -88,5 +89,13 @@ public class FunCallNode implements Node {
     @Override
     public String codeGeneration() {
         return "";
+    }
+
+    @Override
+    public String toPrint(String s) {
+        return s + "Function " + this.id + " at nesting level " + this.semanticData.getNestingLevel() + " (\n"
+                + this.params.stream()
+                    .map(p -> p.toPrint(s + "\t")).collect(Collectors.joining("\n"))
+                + ")\n";
     }
 }

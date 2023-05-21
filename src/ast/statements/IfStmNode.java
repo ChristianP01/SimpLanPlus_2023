@@ -48,7 +48,7 @@ public class IfStmNode implements Node {
         }
 
         for(Node n : this.thenBranch) {
-            if(n.typeCheck() instanceof VoidType) {
+            if(!(n.typeCheck() instanceof VoidType)) {
                 System.out.print("Then-branch of if statements must be made of statements only, found a "
                         + n.typeCheck().toString() + " instead.");
                 return new ErrorType();
@@ -68,6 +68,11 @@ public class IfStmNode implements Node {
 
     @Override
     public String codeGeneration() {
+        return null;
+    }
+
+    @Override
+    public String toPrint(String s) {
         return null;
     }
 }

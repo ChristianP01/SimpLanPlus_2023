@@ -7,4 +7,9 @@ public class VoidType extends Type {
     public String toString() {
         return "void";
     }
+
+    @Override
+    public String toPrint(String s) {
+        return s + "void ";
+    }
 }

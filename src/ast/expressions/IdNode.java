@@ -52,4 +52,9 @@ public class IdNode implements Node {
     public String codeGeneration() {
         return null;
     }
+
+    @Override
+    public String toPrint(String s) {
+        return s + "Id: " + this.id + " at nesting level " + this.semanticData.getNestingLevel() + "\n";
+    }
 }

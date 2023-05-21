@@ -6,6 +6,7 @@ import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class IfBodyNode implements Node {
     private ArrayList<Node> stms;
@@ -36,5 +37,12 @@ public class IfBodyNode implements Node {
     @Override
     public String codeGeneration() {
         return null;
+    }
+
+    @Override
+    public String toPrint(String s) {
+        return s + this.stms.stream()
+                .map(st -> st.toPrint(s + "\t")).collect(Collectors.joining("\n")) +
+                this.exp.toPrint(s + "\t");
     }
 }

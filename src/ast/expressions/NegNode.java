@@ -33,4 +33,9 @@ public class NegNode implements Node {
     public String codeGeneration() {
         return null;
     }
+
+    @Override
+    public String toPrint(String s) {
+        return s + "Negation\n" + this.exp.toPrint(s + "\t");
+    }
 }
