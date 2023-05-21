@@ -5,6 +5,7 @@ import ast.declarations.DecNode;
 import ast.expressions.*;
 import ast.statements.IfStmNode;
 import ast.types.FunType;
+import ast.types.Type;
 import parser.SimpLanPlusBaseVisitor;
 import parser.SimpLanPlusParser;
 import java.util.*;

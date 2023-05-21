@@ -2,12 +2,9 @@ package semanticanalysis;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
-import ast.Type;
-import ast.types.ErrorType;
+import ast.types.Type;
 
 public class SymbolTable {
     private final ArrayList<Environment> symTable;

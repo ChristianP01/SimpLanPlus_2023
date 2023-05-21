@@ -1,8 +1,7 @@
 package ast.declarations;
 
 import ast.Node;
-import ast.Type;
-import ast.types.VoidType;
+import ast.types.Type;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 

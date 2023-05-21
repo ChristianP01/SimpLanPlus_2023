@@ -1,7 +1,7 @@
 package ast.expressions;
 
 import ast.Node;
-import ast.Type;
+import ast.types.Type;
 import ast.types.BoolType;
 import ast.types.ErrorType;
 import ast.types.FunType;
@@ -9,7 +9,6 @@ import ast.types.VoidType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class EqualNode implements Node {

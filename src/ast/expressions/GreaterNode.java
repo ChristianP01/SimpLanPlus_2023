@@ -1,12 +1,7 @@
 package ast.expressions;
 
 import ast.Node;
-import ast.Type;
 import ast.types.BoolType;
-import semanticanalysis.SemanticError;
-import semanticanalysis.SymbolTable;
-
-import java.util.ArrayList;
 
 public class GreaterNode extends BinaryIntegerOpNode {
     public GreaterNode(Node left, Node right) {

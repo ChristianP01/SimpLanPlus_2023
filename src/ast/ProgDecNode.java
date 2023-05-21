@@ -1,5 +1,6 @@
 package ast;
 
+import ast.types.Type;
 import ast.types.VoidType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
@@ -23,12 +24,10 @@ public class ProgDecNode implements Node {
         ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
 
         for (Node d : this.dec) {
-            d.checkSemantics(symTable, nesting);
             errors.addAll(d.checkSemantics(symTable, nesting));
         }
 
         for (Node s : this.stm) {
-            s.checkSemantics(symTable, nesting);
             errors.addAll(s.checkSemantics(symTable, nesting));
         }
 
