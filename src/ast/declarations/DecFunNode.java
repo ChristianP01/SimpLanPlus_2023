@@ -8,6 +8,7 @@ import ast.types.VoidType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class DecFunNode implements Node {
     private FunType type;
@@ -95,5 +96,15 @@ public class DecFunNode implements Node {
     @Override
     public String codeGeneration() {
         return null;
+    }
+
+    @Override
+    public String toPrint(String s) {
+        String expPrint = this.exp != null ? this.exp.toPrint(s + "\t") : "";
+        return s + "Declaration of function " + this.id
+                + " with parameters:\n" + this.params.stream().map(p -> p.toPrint(s + "\t")).collect(Collectors.joining(""))
+                + s + "and body:\n" + this.decs.stream().map(d -> d.toPrint(s + "\t")).collect(Collectors.joining(""))
+                + this.stms.stream().map(st -> st.toPrint(s + "\t")).collect(Collectors.joining(""))
+                + expPrint;
     }
 }

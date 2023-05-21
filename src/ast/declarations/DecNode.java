@@ -39,4 +39,9 @@ public class DecNode implements Node {
         // TODO implementare generazione di codice
         return null;
     }
+
+    @Override
+    public String toPrint(String s) {
+        return s + "Var: " + this.type.toPrint("") + " " + this.id + "\n";
+    }
 }

@@ -67,4 +67,9 @@ public class AssgnNode implements Node {
     public String codeGeneration() {
         return null;
     }
+
+    @Override
+    public String toPrint(String s) {
+        return s + "Assignment: in var " + this.id + " expression:\n" + this.exp.toPrint(s + "\t");
+    }
 }

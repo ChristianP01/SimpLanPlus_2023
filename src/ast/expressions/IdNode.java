@@ -15,6 +15,7 @@ public class IdNode implements Node {
 
     private String id;
     private STentry semanticData;
+    private int nestingLevel;
 
     public IdNode(String id) {
         this.id = id;
@@ -26,6 +27,9 @@ public class IdNode implements Node {
 
         // inserisco la STentry dell'id nel campo corrispondente
         this.semanticData = symTable.lookup(this.id);
+
+        // salvo il nesting level in cui la variabile è utilizzata
+        this.nestingLevel = nesting;
 
         // se la funzione lookup non ha ritornato nulla, allora la variabile non è stata definita
         if(this.semanticData == null) {

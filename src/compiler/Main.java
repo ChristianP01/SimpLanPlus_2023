@@ -6,9 +6,11 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import parser.SimpLanPlusLexer;
 import parser.SimpLanPlusParser;
+import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -42,8 +44,6 @@ public class Main {
 
         // visita dell'albero concreto e ottenimento dell'ast
         Node ast = visitor.visit(parser.prog());
-        // stampa dell'ast
-        System.out.println(ast.toPrint(""));
 
         // scrittura su file degli errori lessicali
         listener.exportToFile(filename + "_lexicalErrors.txt");
@@ -54,7 +54,16 @@ public class Main {
         }
         else {
             // Initialize "global" symbol table
-            SymbolTable SymbolTable = new SymbolTable();
+            SymbolTable symTable = new SymbolTable();
+            ArrayList<SemanticError> semanticErrors = ast.checkSemantics(symTable, 0);
+            if(semanticErrors.size() > 0) {
+                // TODO inserire stampa/scrittura su file di errori semantici
+            } else {
+                // stampa dell'ast
+                System.out.println(ast.toPrint(""));
+            }
+
+
         }
 
     }

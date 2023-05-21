@@ -12,7 +12,8 @@ public class SymbolTable {
 
     public SymbolTable() {
         this.symTable = new ArrayList<Environment>();
-        this.currentNestingLevel = 0;
+        this.currentNestingLevel = -1;
+        this.newScope();
     }
 
     public SymbolTable(ArrayList<Environment> otherST) {
@@ -47,16 +48,26 @@ public class SymbolTable {
 
     // Check if symbol is in current env
     public boolean topLookup(String id) {
-        return this.symTable.get(-1).lookup(id) != null;
+        int size = this.symTable.size();
+        if(size == 0) return false;
+
+        return this.symTable.get(size - 1).lookup(id) != null;
     }
 
     // Returns type of variable "id" (eventually) found.
     public STentry lookup(String id) {
-        Optional<Environment> maybeEnv = this.symTable.stream()
-                .sorted(Collections.reverseOrder())
-                .filter(e -> e.lookup(id) != null)
-                .findFirst();
+        boolean found = false;
+        int i = this.symTable.size() - 1;
+        STentry semanticInfo = null;
+        while(!found && i >= 0) {
+            semanticInfo = this.symTable.get(i).lookup(id);
+            if(semanticInfo != null) {
+                found = true;
+            }
 
-        return maybeEnv.isPresent() ? maybeEnv.get().lookup(id) : null;
+            i--;
+        }
+
+        return semanticInfo;
     }
 }

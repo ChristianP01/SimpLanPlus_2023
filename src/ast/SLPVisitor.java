@@ -31,7 +31,10 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
                 .map(this::visit)
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        Node exp = visit(ctx.exp());
+        Node exp = null;
+        if(ctx.exp() != null) {
+            exp = visit(ctx.exp());
+        }
 
         return new ProgDecNode(decs, stms, exp);
     }

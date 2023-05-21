@@ -55,9 +55,10 @@ public class ProgDecNode implements Node {
     @Override
     public String toPrint(String s) {
         String print = "ProgDec\n";
-        print.concat(this.dec.stream().map(d -> d.toPrint("\t")).collect(Collectors.joining("\n")));
-        print += this.stm.stream().map(st -> st.toPrint("\t")).collect(Collectors.joining("\n"));
-        print += this.exp.toPrint("\t");
+        print += this.dec.stream().map(d -> d.toPrint("\t")).collect(Collectors.joining(""));
+        print += this.stm.stream().map(st -> st.toPrint("\t")).collect(Collectors.joining(""));
+        if(this.exp != null)
+            print += this.exp.toPrint("\t");
 
         return print;
     }
