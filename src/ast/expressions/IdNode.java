@@ -43,7 +43,8 @@ public class IdNode implements Node {
     public Type typeCheck() {
         // se non sono state inserite informazioni sulla semantica durante l'analisi semantica,
         // la variabile non è stata definita e si ritorna errore
-        if(this.semanticData == null) return new ErrorType();
+        if(this.semanticData == null)
+            return new ErrorType();
 
         // se il tipo dell'identificativo è funzione o void ritorna errore
         Type idType = this.semanticData.getType();
