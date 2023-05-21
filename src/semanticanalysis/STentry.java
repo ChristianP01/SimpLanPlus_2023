@@ -1,6 +1,6 @@
 package semanticanalysis;
 
-import ast.Type;
+import ast.types.Type;
 
 public class STentry {
 

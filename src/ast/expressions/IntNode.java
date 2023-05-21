@@ -1,7 +1,7 @@
 package ast.expressions;
 
 import ast.Node;
-import ast.Type;
+import ast.types.Type;
 import ast.types.IntType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;

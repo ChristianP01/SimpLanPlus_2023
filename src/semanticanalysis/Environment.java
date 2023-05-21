@@ -1,6 +1,6 @@
 package semanticanalysis;
 
-import ast.Type;
+import ast.types.Type;
 
 import java.util.HashMap;
 

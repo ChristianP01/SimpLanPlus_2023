@@ -1,7 +1,7 @@
 package ast.statements;
 
 import ast.Node;
-import ast.Type;
+import ast.types.Type;
 import ast.expressions.FunCallNode;
 import ast.types.VoidType;
 

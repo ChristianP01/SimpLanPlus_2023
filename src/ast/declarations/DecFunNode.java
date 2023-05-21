@@ -1,7 +1,7 @@
 package ast.declarations;
 
 import ast.Node;
-import ast.Type;
+import ast.types.Type;
 import ast.types.ErrorType;
 import ast.types.FunType;
 import ast.types.VoidType;

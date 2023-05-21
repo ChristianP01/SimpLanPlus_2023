@@ -1,5 +1,6 @@
 package ast;
 
+import ast.types.Type;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 

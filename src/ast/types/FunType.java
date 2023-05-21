@@ -1,7 +1,5 @@
 package ast.types;
 
-import ast.Type;
-
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
