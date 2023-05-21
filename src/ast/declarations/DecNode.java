@@ -42,6 +42,6 @@ public class DecNode implements Node {
 
     @Override
     public String toPrint(String s) {
-        return s + "Var: " + this.type.toPrint("") + " " + this.id + "\n";
+        return s + "Var dec: " + this.type.toPrint("") + " " + this.id + "\n";
     }
 }

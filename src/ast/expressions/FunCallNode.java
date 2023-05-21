@@ -93,9 +93,8 @@ public class FunCallNode implements Node {
 
     @Override
     public String toPrint(String s) {
-        return s + "Function " + this.id + " at nesting level " + this.semanticData.getNestingLevel() + " (\n"
+        return s + "Function " + this.id + " called at nesting level " + this.callNesting + " with parameters:\n"
                 + this.params.stream()
-                    .map(p -> p.toPrint(s + "\t")).collect(Collectors.joining("\n"))
-                + ")\n";
+                    .map(p -> p.toPrint(s + "\t")).collect(Collectors.joining("\n"));
     }
 }

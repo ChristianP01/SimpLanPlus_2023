@@ -63,7 +63,9 @@ public class IfNode implements Node {
     public String toPrint(String s) {
         return s + "If\n" +
                 this.condition.toPrint(s + "\t") +
+                s + "\t" + "Then branch:\n" +
                 this.thenBranch.toPrint(s + "\t") +
+                s + "\t" + "Else branch:\n" +
                 this.elseBranch.toPrint(s + "\t");
     }
 }

@@ -36,7 +36,7 @@ public class IdNode implements Node {
             errors.add(new SemanticError("Variable " + this.id + " not declared."));
         }
 
-        return new ArrayList<SemanticError>();
+        return errors;
     }
 
     @Override

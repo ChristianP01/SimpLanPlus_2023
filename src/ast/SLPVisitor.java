@@ -75,7 +75,9 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         // visita dell'espressione finale del corpo
-        Node exp = visit(ctx.body().exp());
+        Node exp = null;
+        if(ctx.body().exp() != null)
+            exp = visit(ctx.body().exp());
 
         return new DecFunNode(new FunType(paramTypes, returnType), id, params, decs, stms, exp);
     }

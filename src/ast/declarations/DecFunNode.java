@@ -102,7 +102,8 @@ public class DecFunNode implements Node {
     public String toPrint(String s) {
         String expPrint = this.exp != null ? this.exp.toPrint(s + "\t") : "";
         return s + "Declaration of function " + this.id
-                + " with parameters:\n" + this.params.stream().map(p -> p.toPrint(s + "\t")).collect(Collectors.joining(""))
+                + " with return type " + this.type.getReturnType().toPrint("")
+                + "and parameters:\n" + this.params.stream().map(p -> p.toPrint(s + "\t")).collect(Collectors.joining(""))
                 + s + "and body:\n" + this.decs.stream().map(d -> d.toPrint(s + "\t")).collect(Collectors.joining(""))
                 + this.stms.stream().map(st -> st.toPrint(s + "\t")).collect(Collectors.joining(""))
                 + expPrint;

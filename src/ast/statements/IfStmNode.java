@@ -76,7 +76,9 @@ public class IfStmNode implements Node {
     public String toPrint(String s) {
         return s + "If statement\n" +
                 this.condition.toPrint(s + "\t") +
-                this.thenBranch.stream().map(st -> toPrint(st + "\t")).collect(Collectors.joining("\n")) +
-                this.elseBranch.stream().map(st -> toPrint(st + "\t")).collect(Collectors.joining("\n"));
+                s + "\t" + "Then branch:\n" +
+                this.thenBranch.stream().map(st -> st.toPrint(s + "\t")).collect(Collectors.joining("\n")) +
+                s + "\t" + "Else branch:\n" +
+                this.elseBranch.stream().map(st -> st.toPrint(s + "\t")).collect(Collectors.joining("\n"));
     }
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        String filename = "prova1.simplan";
+        String filename = "test.simplan";
         FileInputStream sourceFile;
 
         try {
@@ -58,6 +58,8 @@ public class Main {
             ArrayList<SemanticError> semanticErrors = ast.checkSemantics(symTable, 0);
             if(semanticErrors.size() > 0) {
                 // TODO inserire stampa/scrittura su file di errori semantici
+                System.out.println("Semantic errors found (" + semanticErrors.size() + " in total):");
+                semanticErrors.stream().forEach(error -> System.out.println("\t" + error.toString()));
             } else {
                 // stampa dell'ast
                 System.out.println(ast.toPrint(""));
