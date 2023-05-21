@@ -23,10 +23,12 @@ public class NegNode implements Node {
 
     @Override
     public Type typeCheck() {
-        if(exp.typeCheck() instanceof BoolType) return new BoolType();
-
-        System.out.println("Type mismatch: negation expects a bool type, got " + this.exp.typeCheck().toString() + " type instead.");
-        return exp.typeCheck() instanceof BoolType ? new BoolType() : new ErrorType();
+        if(exp.typeCheck() instanceof BoolType)
+            return new BoolType();
+        else {
+            System.out.println("Type mismatch: negation expects a bool type, got " + this.exp.typeCheck().toString() + " type instead.");
+            return new ErrorType();
+        }
     }
 
     @Override

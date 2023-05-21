@@ -42,24 +42,23 @@ public class DecFunNode implements Node {
 
             // controllo semantica dei parametri e conseguente inserimento nella symtable
             for (Node param : this.params) {
-                errors.addAll(param.checkSemantics(symTable, nesting + 1));
+                errors.addAll(param.checkSemantics(symTable, symTable.getCurrentNestingLevel()));
             }
 
             // controllo delle dichiarazioni
             for(Node dec : this.decs) {
-                errors.addAll(dec.checkSemantics(symTable, nesting + 1));
+                errors.addAll(dec.checkSemantics(symTable, symTable.getCurrentNestingLevel()));
             }
 
             // controllo degli statements
             for(Node stm : this.stms) {
-                errors.addAll(stm.checkSemantics(symTable, nesting + 1));
+                errors.addAll(stm.checkSemantics(symTable, symTable.getCurrentNestingLevel()));
             }
 
             // controllo dell'espressione (se presente)
             if(this.exp != null) {
-                errors.addAll(this.exp.checkSemantics(symTable, nesting + 1));
+                errors.addAll(this.exp.checkSemantics(symTable, symTable.getCurrentNestingLevel()));
             }
-
 
             // uscita dallo scope
             symTable.exitScope();
@@ -68,7 +67,6 @@ public class DecFunNode implements Node {
             symTable.insert(this.id, this.type);
         }
         return errors;
-
     }
 
     @Override

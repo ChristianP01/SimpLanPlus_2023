@@ -15,6 +15,10 @@ public class SymbolTable {
         this.currentNestingLevel = 0;
     }
 
+    public int getCurrentNestingLevel() {
+        return this.currentNestingLevel;
+    }
+
     public SymbolTable(ArrayList<Environment> otherST) {
         this.symTable = new ArrayList<Environment>();
         this.symTable.addAll(otherST);
@@ -50,13 +54,14 @@ public class SymbolTable {
         return this.symTable.get(-1).lookup(id) != null;
     }
 
-    // Returns type of variable "id" (eventually) found.
+    // Returns STEntry of a variable having its id, if (eventually) found.
     public STentry lookup(String id) {
         Optional<Environment> maybeEnv = this.symTable.stream()
                 .sorted(Collections.reverseOrder())
                 .filter(e -> e.lookup(id) != null)
                 .findFirst();
 
-        return maybeEnv.isPresent() ? maybeEnv.get().lookup(id) : null;
+        // If found in an env, return it, else return null.
+        return maybeEnv.map(env -> env.lookup(id)).orElse(null);
     }
 }
