@@ -4,6 +4,7 @@ import ast.Node;
 import ast.Type;
 import ast.types.BoolType;
 import ast.types.ErrorType;
+import ast.types.FunType;
 import ast.types.VoidType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
@@ -36,10 +37,10 @@ public class EqualNode implements Node {
         Type leftType = left.typeCheck();
         Type rightType = right.typeCheck();
         // si controlla per prima cosa che entrambi gli operandi non siano void o funzioni
-        if(leftType instanceof BoolType || leftType instanceof VoidType) {
+        if(leftType instanceof FunType || leftType instanceof VoidType) {
             System.out.println("Cannot compare expressions of type " + leftType.toString() + ".");
             return new ErrorType();
-        } else if(rightType instanceof BoolType || rightType instanceof VoidType) {
+        } else if(rightType instanceof FunType || rightType instanceof VoidType) {
             System.out.println("Cannot compare expressions of type " + rightType.toString() + ".");
             return new ErrorType();
             // se i tipi non combaciano, si ritorna errore

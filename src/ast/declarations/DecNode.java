@@ -32,7 +32,7 @@ public class DecNode implements Node {
 
     @Override
     public Type typeCheck() {
-        return new VoidType();
+        return null;
     }
 
     @Override

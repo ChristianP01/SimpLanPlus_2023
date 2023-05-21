@@ -1,20 +1,20 @@
 package ast;
 
+import ast.types.VoidType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
 
-public class ProgDecNode extends ProgNode {
-
+public class ProgDecNode implements Node {
     private ArrayList<Node> dec;
     private ArrayList<Node> stm;
+    private Node exp;
 
     public ProgDecNode(ArrayList<Node> dec, ArrayList<Node> stm, Node exp) {
-        super(exp);
-
         this.dec = dec;
         this.stm = stm;
+        this.exp = exp;
     }
 
     @Override
@@ -32,13 +32,18 @@ public class ProgDecNode extends ProgNode {
             errors.addAll(s.checkSemantics(symTable, nesting));
         }
 
-        errors.addAll(super.checkSemantics(symTable, nesting));
+        if(this.exp != null)
+            errors.addAll(exp.checkSemantics(symTable, nesting));
+
         return errors;
     }
 
     @Override
     public Type typeCheck() {
-        return null;
+        this.dec.stream().map(Node::typeCheck);
+        this.stm.stream().map(Node::typeCheck);
+
+        return this.exp != null ? this.exp.typeCheck() : new VoidType();
     }
 
     @Override

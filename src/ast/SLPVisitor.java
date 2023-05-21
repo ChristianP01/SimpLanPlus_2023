@@ -4,6 +4,7 @@ import ast.declarations.DecFunNode;
 import ast.declarations.DecNode;
 import ast.expressions.*;
 import ast.statements.IfStmNode;
+import ast.types.FunType;
 import parser.SimpLanPlusBaseVisitor;
 import parser.SimpLanPlusParser;
 import java.util.*;
@@ -43,18 +44,35 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
     @Override
     public Node visitFunDec(SimpLanPlusParser.FunDecContext ctx) {
-        // TODO
         String id = ctx.ID().getText();
         ArrayList<Node> params = new ArrayList<>();
-        Type type = (Type) visit(ctx.type());
+
+        // tipo di ritorno della funzione
+        Type returnType = (Type) visit(ctx.type());
 
         for (SimpLanPlusParser.ParamContext param : ctx.param()) {
             params.add(visit(param));
         }
 
-        BodyNode body = (BodyNode) visit(ctx.body());
+        // tipi dei parametri
+        ArrayList<Type> paramTypes = ctx.param().stream()
+                .map(p -> visit(p.type()).typeCheck())
+                .collect(Collectors.toCollection(ArrayList::new));
 
-        return new DecFunNode(type, id, params, body);
+        // visita delle dichiarazioni
+        ArrayList<Node> decs = ctx.body().dec().stream()
+                .map(d -> visit(d))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        // visita degli statements
+        ArrayList<Node> stms = ctx.body().stm().stream()
+                .map(s -> visit(s))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        // visita dell'espressione finale del corpo
+        Node exp = visit(ctx.body().exp());
+
+        return new DecFunNode(new FunType(paramTypes, returnType), id, params, decs, stms, exp);
     }
 
     @Override

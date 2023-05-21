@@ -1,23 +1,29 @@
 package ast.declarations;
 
-import ast.BodyNode;
 import ast.Node;
 import ast.Type;
+import ast.types.ErrorType;
+import ast.types.FunType;
+import ast.types.VoidType;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 import java.util.ArrayList;
 
 public class DecFunNode implements Node {
-    private Type type;
+    private FunType type;
     private String id;
     private ArrayList<Node> params;
-    private BodyNode funBody;
+    private ArrayList<Node> decs;
+    private ArrayList<Node> stms;
+    private Node exp;
 
-    public DecFunNode(Type type, String id, ArrayList<Node> params, BodyNode funBody) {
+    public DecFunNode(FunType type, String id, ArrayList<Node> params, ArrayList<Node> decs, ArrayList<Node> stms, Node exp) {
         this.type = type;
         this.id = id;
         this.params = params;
-        this.funBody = funBody;
+        this.decs = decs;
+        this.stms = stms;
+        this.exp = exp;
     }
 
     @Override
@@ -35,12 +41,26 @@ public class DecFunNode implements Node {
             symTable.insert(this.id, this.type);
 
             // controllo semantica dei parametri e conseguente inserimento nella symtable
-            for (Node param : params) {
+            for (Node param : this.params) {
                 errors.addAll(param.checkSemantics(symTable, nesting + 1));
             }
 
-            // controllo del corpo della funzione
-            errors.addAll(funBody.checkSemantics(symTable, nesting + 1));
+            // controllo delle dichiarazioni
+            for(Node dec : this.decs) {
+                errors.addAll(dec.checkSemantics(symTable, nesting + 1));
+            }
+
+            // controllo degli statements
+            for(Node stm : this.stms) {
+                errors.addAll(stm.checkSemantics(symTable, nesting + 1));
+            }
+
+            // controllo dell'espressione (se presente)
+            if(this.exp != null) {
+                errors.addAll(this.exp.checkSemantics(symTable, nesting + 1));
+            }
+
+
             // uscita dallo scope
             symTable.exitScope();
 
@@ -53,7 +73,23 @@ public class DecFunNode implements Node {
 
     @Override
     public Type typeCheck() {
-        return null;
+        for(Node dec : this.decs) {
+            dec.typeCheck();
+        }
+
+        for(Node stm : this.stms) {
+            stm.typeCheck();
+        }
+
+        // se l'ultima espressione non è presente, la funzione ritorna tipo void
+        Type expType = this.exp != null ? this.exp.typeCheck() : new VoidType();
+        if(!expType.isEqual(this.type.getReturnType())) {
+            System.out.println("Function " + this.id + " should return a type " + this.type.getReturnType().toString() +
+                    ", returns a type " + expType.toString() + " instead.");
+            return new ErrorType();
+        } else {
+            return expType;
+        }
     }
 
     @Override

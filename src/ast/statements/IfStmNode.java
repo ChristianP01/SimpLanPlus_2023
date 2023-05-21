@@ -41,14 +41,26 @@ public class IfStmNode implements Node {
 
     @Override
     public Type typeCheck() {
-        if(!(this.cond.typeCheck() instanceof BoolType)) return new ErrorType();
+        Type condType = this.cond.typeCheck();
+        if(!(condType instanceof BoolType)) {
+            System.out.println("If condition must be a bool, got a " + condType.toString() + " instead.");
+            return new ErrorType();
+        }
 
         for(Node n : this.thenBranch) {
-            if(n.typeCheck() instanceof VoidType) return new ErrorType();
+            if(n.typeCheck() instanceof VoidType) {
+                System.out.print("Then-branch of if statements must be made of statements only, found a "
+                        + n.typeCheck().toString() + " instead.");
+                return new ErrorType();
+            }
         }
 
         for(Node n : this.elseBranch) {
-            if (!(n.typeCheck() instanceof VoidType)) return new ErrorType();
+            if (!(n.typeCheck() instanceof VoidType)) {
+                System.out.print("Else-branch of if statements must be made of statements only, found a "
+                        + n.typeCheck().toString() + " instead.");
+                return new ErrorType();
+            }
         }
 
         return new VoidType();
