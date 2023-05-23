@@ -9,7 +9,10 @@ import parser.SimpLanPlusParser;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
@@ -58,8 +61,18 @@ public class Main {
             ArrayList<SemanticError> semanticErrors = ast.checkSemantics(symTable, 0);
             if(semanticErrors.size() > 0) {
                 // TODO inserire stampa/scrittura su file di errori semantici
-                System.out.println("Semantic errors found (" + semanticErrors.size() + " in total):");
-                semanticErrors.stream().forEach(error -> System.out.println("\t" + error.toString()));
+
+                BufferedWriter bw = new BufferedWriter(new FileWriter(filename + "_semanticErrors.txt"));
+                bw.write("Semantic errors found (" + semanticErrors.size() + " in total):");
+
+                semanticErrors.forEach(error -> {
+                    try {
+                        bw.write("\t" + error.toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                bw.close();
             } else {
                 // stampa dell'ast
                 System.out.println(ast.toPrint(""));

@@ -68,10 +68,8 @@ public class SymbolTable {
             if(semanticInfo != null) {
                 found = true;
             }
-            
             i--;
         }
-
         return semanticInfo;
 
     }

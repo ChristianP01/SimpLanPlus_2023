@@ -1,0 +1,1 @@
+Semantic errors found (1 in total):	Variable x not declared.
