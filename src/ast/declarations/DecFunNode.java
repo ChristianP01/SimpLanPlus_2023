@@ -59,7 +59,14 @@ public class DecFunNode implements Node {
             // controllo dell'espressione (se presente)
             if(this.exp != null) {
                 errors.addAll(this.exp.checkSemantics(symTable, symTable.getCurrentNestingLevel()));
+
+                if(!this.exp.typeCheck().isEqual(this.type.getReturnType())) {
+                    errors.add(new SemanticError("ERROR: Cannot return " +
+                            this.exp.typeCheck() + " type in a " + this.type.getReturnType() + " function."));
+                }
             }
+
+
 
             // uscita dallo scope
             symTable.exitScope();

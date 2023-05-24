@@ -1,1 +1,1 @@
-Semantic errors found (1 in total):	Variable x not declared.
+Semantic errors found (1 in total):	ERROR: Cannot return int type in a void function.

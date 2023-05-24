@@ -23,6 +23,7 @@ public class FunType extends Type {
 
     @Override
     public String toString() {
+
         return "Function (" + this.paramTypes.stream()
                 .map(t -> t.toString())
                 .collect(Collectors.joining(", "))

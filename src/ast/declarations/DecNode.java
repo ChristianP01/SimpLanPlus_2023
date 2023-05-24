@@ -21,7 +21,8 @@ public class DecNode implements Node {
         ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
         // controllo che non sia già stato dichiarato un identificatore con lo stesso nome
         if(symTable.topLookup(this.id)) {
-            errors.add(new SemanticError("Identifier " + this.id + " already declared in current scope."));
+            errors.add(new SemanticError("Identifier " + this.id + " already declared in scope " +
+                    symTable.getCurrentNestingLevel() + "."));
         } else {
             symTable.insert(this.id, (Type) this.type);
         }
