@@ -1,4 +1,4 @@
-// Generated from java-escape by ANTLR 4.11.1
+// Generated from /home/christian/Università/Magistrale/Compilatori/Progetto23/SimpLanPlus2023/SimpLanPlus_2023/src/parser/SimpLanPlus.g4 by ANTLR 4.12.0
 package parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
 public class SimpLanPlusParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.11.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.12.0", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -84,7 +84,7 @@ public class SimpLanPlusParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "java-escape"; }
+	public String getGrammarFileName() { return "SimpLanPlus.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -191,7 +191,7 @@ public class SimpLanPlusParser extends Parser {
 					setState(22); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
-				} while ( ((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0 );
+				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0) );
 				setState(27);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
@@ -211,7 +211,7 @@ public class SimpLanPlusParser extends Parser {
 				setState(31);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (((_la) & ~0x3f) == 0 && ((1L << _la) & 402712580L) != 0) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 402712580L) != 0)) {
 					{
 					setState(30);
 					exp(0);
@@ -249,6 +249,8 @@ public class SimpLanPlusParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FunDecContext extends DecContext {
+		public ParamContext firstParam;
+		public ParamContext otherParams;
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
@@ -316,10 +318,10 @@ public class SimpLanPlusParser extends Parser {
 				setState(50);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0)) {
 					{
 					setState(42);
-					param();
+					((FunDecContext)_localctx).firstParam = param();
 					setState(47);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
@@ -329,7 +331,7 @@ public class SimpLanPlusParser extends Parser {
 						setState(43);
 						match(T__2);
 						setState(44);
-						param();
+						((FunDecContext)_localctx).otherParams = param();
 						}
 						}
 						setState(49);
@@ -441,7 +443,7 @@ public class SimpLanPlusParser extends Parser {
 			setState(65);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0)) {
 				{
 				{
 				setState(62);
@@ -471,7 +473,7 @@ public class SimpLanPlusParser extends Parser {
 			setState(75);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (((_la) & ~0x3f) == 0 && ((1L << _la) & 402712580L) != 0) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 402712580L) != 0)) {
 				{
 				setState(74);
 				exp(0);
@@ -626,7 +628,7 @@ public class SimpLanPlusParser extends Parser {
 			{
 			setState(90);
 			_la = _input.LA(1);
-			if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -743,7 +745,7 @@ public class SimpLanPlusParser extends Parser {
 				setState(107);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (((_la) & ~0x3f) == 0 && ((1L << _la) & 402712580L) != 0) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 402712580L) != 0)) {
 					{
 					setState(99);
 					exp(0);
@@ -1116,7 +1118,7 @@ public class SimpLanPlusParser extends Parser {
 				setState(159);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (((_la) & ~0x3f) == 0 && ((1L << _la) & 402712580L) != 0) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 402712580L) != 0)) {
 					{
 					setState(151);
 					exp(0);
@@ -1210,7 +1212,7 @@ public class SimpLanPlusParser extends Parser {
 						setState(171);
 						((IntCompExpContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 32505856L) != 0) ) {
+						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 32505856L) != 0)) ) {
 							((IntCompExpContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {

@@ -56,29 +56,13 @@ public class Main {
             System.out.println("Syntactic errors occurred.");
         }
         else {
-            // Initialize "global" symbol table
+            // Inizializzazione della symbol table "globale"
             SymbolTable symTable = new SymbolTable();
             ArrayList<SemanticError> semanticErrors = ast.checkSemantics(symTable, 0);
-            if(semanticErrors.size() > 0) {
-                // TODO inserire stampa/scrittura su file di errori semantici
-
-                BufferedWriter bw = new BufferedWriter(new FileWriter(filename + "_semanticErrors.txt"));
-                bw.write("Semantic errors found (" + semanticErrors.size() + " in total):");
-
-                semanticErrors.forEach(error -> {
-                    try {
-                        bw.write("\t" + error.toString());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                bw.close();
-            } else {
-                // stampa dell'ast
+            if(semanticErrors.size() > 0)
+                System.out.println("Semantic errors found (" + semanticErrors.size() + " in total):");
+            else
                 System.out.println(ast.toPrint(""));
-            }
-
-
         }
 
     }

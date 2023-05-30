@@ -1,10 +1,5 @@
 int a;
 
-void fun(int b) {
-    a=7;
-    a
+int fun(int b, int a) {
+    fun(1, true)
 }
-
-a = 2;
-a > 2;
-a + 2

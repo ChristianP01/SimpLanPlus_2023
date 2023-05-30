@@ -55,35 +55,38 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
         // tipo di ritorno della funzione
         Type returnType = (Type) visit(ctx.type());
 
-        for (SimpLanPlusParser.ParamContext param : ctx.param()) {
-            params.add(visit(param));
-        }
+        // Visita dei parametri formali della funzione
+        params.add(visit(ctx.firstParam));
+        params.add(visit(ctx.otherParams));
 
-        // tipi dei parametri
-        ArrayList<Type> paramTypes = ctx.param().stream()
-                .map(p -> visit(p.type()).typeCheck())
+
+        // Recupero dei tipi dei parametri formali
+        ArrayList<Type> paramTypes = params.stream()
+                .map(Node::typeCheck)
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        // visita delle dichiarazioni
+        // Visita delle dichiarazioni
         ArrayList<Node> decs = ctx.body().dec().stream()
-                .map(d -> visit(d))
+                .map(this::visit)
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        // visita degli statements
+        // Visita degli statements
         ArrayList<Node> stms = ctx.body().stm().stream()
-                .map(s -> visit(s))
+                .map(this::visit)
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        // visita dell'espressione finale del corpo
+        // Visita dell'espressione finale del corpo
         Node exp = null;
         if(ctx.body().exp() != null)
             exp = visit(ctx.body().exp());
+
 
         return new DecFunNode(new FunType(paramTypes, returnType), id, params, decs, stms, exp);
     }
 
     @Override
     public Node visitParam(SimpLanPlusParser.ParamContext ctx) {
+
         Node type = visit(ctx.type());
         String id = ctx.ID().getText();
 
@@ -256,6 +259,7 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
         for (SimpLanPlusParser.ExpContext exp : ctx.exp()) {
             params.add(visit(exp));
         }
+
         return new FunCallNode(id, params);
     }
 

@@ -4,6 +4,7 @@ import ast.Node;
 import ast.types.Type;
 import ast.types.ErrorType;
 import ast.types.FunType;
+import ast.types.VoidType;
 import semanticanalysis.STentry;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
@@ -48,6 +49,7 @@ public class FunCallNode implements Node {
 
     @Override
     public Type typeCheck() {
+
         if(this.semanticData == null) {
             System.out.println("Function not declared");
             return new ErrorType();
@@ -57,27 +59,29 @@ public class FunCallNode implements Node {
                 ArrayList<Type> typeParams =  ((FunType) funType).getParamTypes();
                 int numParam = typeParams.size();
 
-                // controllo che la funzione sia stata chiamata con il giusto numero di parametri
+                // Controllo se la funzione è stata chiamata con un numero diverso di parametri rispetto alla dichiarazione
                 if(this.params.size() != numParam) {
-                    System.out.println("Expected " + numParam + " for function "
+                    System.out.println("Expected " + numParam + " parameter(s) for function "
                             + this.id + ", got " + this.params.size() + " instead.");
                     return new ErrorType();
-                } else {
-                    // controlla che i tipi dei parametri attuali coincidano con quelli formali
-                    boolean parametersMatch = IntStream.range(0, this.params.size())
-                            .allMatch(i -> {
-                                if(!this.params.get(i).typeCheck().isEqual(typeParams.get(i))) {
-                                    System.out.println("Called function " + this.id + " with actual parameter #" + (i + 1)
-                                            + " of type " + this.params.get(i).typeCheck().toString() +
-                                            ", while type " + typeParams.get(i).toString() + " is expected.");
-                                    return false;
-                                }
+                }
+                else {
+                    // Se il numero di parametri è corretto, controllo il loro tipo
 
-                                return true;
-                            });
+                    boolean correctParam = true;
+                    for (int i = 0; i < this.params.size() && correctParam; i++) {
+                        if (!this.params.get(i).typeCheck().toString().equals(typeParams.get(i).toString())) {
+                                correctParam = false;
+                                System.out.println("Error on parameter #" + (i+1));
+                                System.out.println("Requested param is " + typeParams.get(i).toPrint("") +
+                                "but " + this.params.get(i).typeCheck().toPrint("") + "was given.");
 
-                    // se i tipi dei parametri combaciano, restituisce il tipo di ritorno della funzione
-                    return parametersMatch ? ((FunType) this.semanticData.getType()).getReturnType() : new ErrorType();
+
+                        }
+                    }
+
+                    return correctParam? ((FunType) this.semanticData.getType()).getReturnType() : new ErrorType();
+
                     }
                 } else {
                 System.out.println("Identifier " + this.id + " is not a function and cannot be called.");

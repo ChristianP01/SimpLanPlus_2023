@@ -1,1 +1,1 @@
-Semantic errors found (1 in total):	ERROR: Cannot return int type in a void function.
+Semantic errors found (1 in total):	ERROR: Cannot return error type in a int function.
