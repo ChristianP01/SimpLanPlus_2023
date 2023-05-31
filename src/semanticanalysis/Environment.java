@@ -7,7 +7,6 @@ import java.util.HashMap;
 public class Environment {
     private HashMap<String, STentry> environment;
     private int nestingLevel;
-    // TODO vedere offset
     private int offset;
 
     public Environment(int nestingLevel) {
@@ -25,7 +24,8 @@ public class Environment {
     }
 
     public void insert(String id, Type type) {
-        // TODO vedere offset
+        // si incrementa l'offset quando si inserisce una nuova variabile
+        this.offset++;
         // il valore initialized è impostato a false
         this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset));
     }

@@ -28,8 +28,7 @@ public class IntNode implements Node {
 
     @Override
     public String codeGeneration() {
-        // TODO implementare la generazione di codice
-        return null;
+        return "storei A0 " + this.value + "\n";
     }
 
     @Override

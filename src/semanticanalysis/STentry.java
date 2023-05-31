@@ -8,12 +8,22 @@ public class STentry {
     private int nestingLevel;
     private boolean initialized;
     private int offset;
+    // utilizzato solo per le funzioni
+    private String label;
 
     public STentry(Type type, int nestingLevel, boolean initialized, int offset) {
         this.type = type;
         this.nestingLevel = nestingLevel;
         this.initialized = initialized;
         this.offset = offset;
+    }
+
+    public STentry(Type type, int nestingLevel, boolean initialized, int offset, String label) {
+        this.type = type;
+        this.nestingLevel = nestingLevel;
+        this.initialized = initialized;
+        this.offset = offset;
+        this.label = label;
     }
 
     public Type getType() {
@@ -25,6 +35,7 @@ public class STentry {
     public int getOffset() {
         return offset;
     }
+    public String getLabel() { return label; }
 
     public void setType(Type type) { this.type = type; }
     public void setNestingLevel(int nestingLevel) { this.nestingLevel = nestingLevel; }

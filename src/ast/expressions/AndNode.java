@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.Node;
+import ast.simplanlib.SimplanInterface;
 import ast.types.BoolType;
 
 public class AndNode extends BinaryBooleanOpNode {
@@ -10,7 +11,10 @@ public class AndNode extends BinaryBooleanOpNode {
 
     @Override
     public String codeGeneration() {
-        // TODO implementare generazione di codice
-        return "";
+        String exitLabel = SimplanInterface.newLabel();
+        return left.codeGeneration() +
+                "beq A0 0 " + exitLabel + "\n" +
+                right.codeGeneration() +
+                exitLabel + ": \n";
     }
 }

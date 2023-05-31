@@ -10,7 +10,11 @@ public class DivNode extends BinaryIntegerOpNode {
 
     @Override
     public String codeGeneration() {
-        // TODO implementare generazione di codice
-        return super.codeGeneration();
+        return left.codeGeneration() +
+                "pushr A0 \n" +
+                right.codeGeneration() +
+                "popr T1 \n" +
+                "div T1 A0 \n" +
+                "pushr A0 \n";
     }
 }

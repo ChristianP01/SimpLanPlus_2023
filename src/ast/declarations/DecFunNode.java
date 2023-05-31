@@ -100,7 +100,28 @@ public class DecFunNode implements Node {
 
     @Override
     public String codeGeneration() {
-        return null;
+        StringBuilder decCodes = new StringBuilder();
+        for(Node dec : this.decs) {
+            decCodes.append(dec.codeGeneration());
+        }
+
+        StringBuilder stmCodes = new StringBuilder();
+        for(Node stm : this.stms) {
+            stmCodes.append(stm.codeGeneration());
+        }
+
+        String expCode = (this.exp == null) ? "" : this.exp.codeGeneration();
+
+        return "pushr RA\n" +
+                decCodes +
+                stmCodes +
+                expCode +
+                "popr RA\n" +
+                "addi SP " + (this.params.size() + 1) + "\n" +
+                "popr FP\n" +
+                "move FP AL\n" +
+                "subi AL 1\n" +
+                "rsub RA\n";
     }
 
     @Override

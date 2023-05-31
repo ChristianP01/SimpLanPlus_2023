@@ -92,7 +92,27 @@ public class FunCallNode implements Node {
 
     @Override
     public String codeGeneration() {
-        return "";
+        String newAl = "";
+        for(int i = 0; i < this.callNesting - this.semanticData.getNestingLevel(); i++) {
+            newAl = "store T1 0(T1)\n";
+        }
+
+        String parametersCode = "";
+        for (Node param : this.params) {
+            parametersCode += param.codeGeneration();
+            parametersCode += "pushr A0\n";
+        }
+
+        return "pushr FP\n" +
+                "move AL T1\n" +
+                newAl +
+                "pushr T1\n" +
+                parametersCode +
+                "move SP FP\n" +
+                "addi FP " + (this.params.size() + 2) + "\n" +
+                "move FP AL\n" +
+                "subi AL 1\n" +
+                "jsub " + this.semanticData.getLabel();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.Node;
+import ast.simplanlib.SimplanInterface;
 import ast.types.Type;
 import ast.types.BoolType;
 import ast.types.ErrorType;
@@ -33,7 +34,17 @@ public class NegNode implements Node {
 
     @Override
     public String codeGeneration() {
-        return null;
+        String exitLabel = SimplanInterface.newLabel();
+        String trueLabel = SimplanInterface.newLabel();
+
+        return exp.codeGeneration() +
+                "storei T1 1 \n" +
+                "beq A0 T1 " + trueLabel + "\n" +
+                "storei A0 1 \n" +
+                "b" + exitLabel + "\n" +
+                trueLabel + ": \n" +
+                "storei A0 0 \n" +
+                exitLabel + ": \n";
     }
 
     @Override

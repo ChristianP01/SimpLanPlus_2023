@@ -55,7 +55,15 @@ public class IdNode implements Node {
 
     @Override
     public String codeGeneration() {
-        return null;
+        String alCode = "";
+        for(int i = 0; i < this.nestingLevel - this.semanticData.getNestingLevel(); i++) {
+            alCode += "store T1 0(T1)";
+        }
+
+        return "move AL T1\n" +
+                alCode +
+                "subi T1 " + this.semanticData.getOffset() + "\n" + // TODO subi aggiunge allo stack?
+                "store A0 0(T1)";
     }
 
     @Override

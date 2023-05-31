@@ -10,7 +10,11 @@ public class SumNode extends BinaryIntegerOpNode {
 
     @Override
     public String codeGeneration() {
-        // TODO implementare generazione di codice
-        return super.codeGeneration();
+        return this.left.codeGeneration() +
+                "pushr A0\n" +
+                this.right.codeGeneration() +
+                "popr T1\n" +
+                "add A0 T1\n" +
+                "popr A0";
     }
 }

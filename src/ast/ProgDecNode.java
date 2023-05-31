@@ -48,8 +48,19 @@ public class ProgDecNode implements Node {
 
     @Override
     public String codeGeneration() {
-        // TODO implementare la generazione di codice
-        return null;
+        StringBuilder codegen = new StringBuilder();
+
+        for(Node dec : this.dec) {
+           codegen.append(dec.codeGeneration());
+        }
+
+        for (Node stm : this.stm) {
+            codegen.append(stm.codeGeneration());
+        }
+
+        codegen.append(this.exp == null ? "" : this.exp.codeGeneration());
+
+        return codegen + "halt";
     }
 
     @Override

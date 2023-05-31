@@ -28,8 +28,7 @@ public class BoolNode implements Node {
 
     @Override
     public String codeGeneration() {
-        // TODO implementare la generazione di codice
-        return null;
+        return "storei A0 " + (this.value ? "1" : "0") + "\n";
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.Node;
+import ast.simplanlib.SimplanInterface;
 import ast.types.Type;
 import ast.types.BoolType;
 import ast.types.ErrorType;
@@ -53,7 +54,18 @@ public class EqualNode implements Node {
 
     @Override
     public String codeGeneration() {
-        return null;
+        String eqLabel = SimplanInterface.newLabel();
+        String exitLabel = SimplanInterface.newLabel();
+        return this.left.codeGeneration() +
+                "pushr A0\n" +
+                this.right.codeGeneration() +
+                "popr T1\n" +
+                "beq A0 T1 " + eqLabel + "\n" +
+                "storei A0 0\n" +
+                "b " + exitLabel + "\n" +
+                eqLabel + ":\n" +
+                "storei A0 1\n" +
+                exitLabel + ":\n";
     }
 
     @Override

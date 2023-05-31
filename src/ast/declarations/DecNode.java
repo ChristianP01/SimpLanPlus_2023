@@ -37,9 +37,8 @@ public class DecNode implements Node {
 
     @Override
     public String codeGeneration() {
-        // TODO implementare generazione di codice
-        return null;
-    }
+        return "subi SP 1";
+    } // TODO Inserire "popr SP"?
 
     @Override
     public String toPrint(String s) {

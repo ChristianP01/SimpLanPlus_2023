@@ -1,9 +1,6 @@
 package semanticanalysis;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Optional;
-
 import ast.types.Type;
 
 public class SymbolTable {

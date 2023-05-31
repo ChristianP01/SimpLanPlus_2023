@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class AssgnNode implements Node {
     private String id;
     private Node exp;
+    private int nestingLevel;
     private STentry semanticData;
 
     public AssgnNode(String id, Node exp) {
@@ -26,6 +27,7 @@ public class AssgnNode implements Node {
     public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {
         // TODO modificare per aggiungere alla symbol table che la variabile è ora utilizzata
         ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
+        this.nestingLevel = nesting;
 
         this.semanticData = symTable.lookup(this.id);
         if(this.semanticData == null) {
@@ -65,7 +67,15 @@ public class AssgnNode implements Node {
 
     @Override
     public String codeGeneration() {
-        return null;
+        StringBuilder alCode = new StringBuilder();
+        for(int i = 0; i < this.nestingLevel - this.semanticData.getNestingLevel(); i++) {
+            alCode.append("store T1 0(T1)");
+        }
+        return this.exp.codeGeneration() +
+                "move AL T1\n" +
+                alCode +
+                "subi T1 " + this.semanticData.getOffset() + "\n" +
+                "load A0 0(T1)\n";
     }
 
     @Override

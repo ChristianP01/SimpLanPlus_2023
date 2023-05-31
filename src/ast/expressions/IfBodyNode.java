@@ -36,7 +36,14 @@ public class IfBodyNode implements Node {
 
     @Override
     public String codeGeneration() {
-        return null;
+        StringBuilder codegen = new StringBuilder();
+
+        for (Node stm : stms)
+            codegen.append(stm.codeGeneration());
+
+        codegen.append(this.exp == null ? "" : this.exp.codeGeneration());
+
+        return codegen.toString();
     }
 
     @Override

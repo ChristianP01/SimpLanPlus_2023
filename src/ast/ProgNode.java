@@ -25,8 +25,7 @@ public class ProgNode implements Node {
 
     @Override
     public String codeGeneration() {
-        // TODO implementare la generazione di codice
-        return null;
+        return this.exp == null ? "" : this.exp.codeGeneration() + "halt";
     }
 
     @Override
