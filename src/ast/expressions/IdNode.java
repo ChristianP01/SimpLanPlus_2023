@@ -62,7 +62,7 @@ public class IdNode implements Node {
 
         return "move AL T1\n" +
                 alCode +
-                "subi T1 " + this.semanticData.getOffset() + "\n" + // TODO subi aggiunge allo stack?
+                "subi T1 " + this.semanticData.getOffset() + "\n" +
                 "store A0 0(T1)\n";
     }
 

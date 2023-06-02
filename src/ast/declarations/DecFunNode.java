@@ -126,7 +126,7 @@ public class DecFunNode implements Node {
                 "subi AL 1\n" +
                 "rsub RA\n");
 
-        return "push " + this.fun_label + "\n"; // TODO Capire cosa faccia
+        return ""; // TODO Capire cosa faccia
     }
 
     @Override

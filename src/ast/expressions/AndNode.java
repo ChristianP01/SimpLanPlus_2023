@@ -13,7 +13,8 @@ public class AndNode extends BinaryBooleanOpNode {
     public String codeGeneration() {
         String exitLabel = SimplanInterface.newLabel();
         return left.codeGeneration() +
-                "beq A0 0 " + exitLabel + "\n" +
+                "storei T1 0\n" +
+                "beq A0 T1 " + exitLabel + "\n" +
                 right.codeGeneration() +
                 exitLabel + ": \n";
     }

@@ -73,10 +73,15 @@ public class Main {
                 System.out.println(ast.toPrint(""));
         }
 
-        System.out.println(ast.codeGeneration());
+        String codegen = ast.codeGeneration();
+        System.out.println(codegen);
 
         // Code generation
-        CharStream code = CharStreams.fromString(ast.codeGeneration());
+        CharStream code = CharStreams.fromString(codegen);
+        // scrittura del codice su file
+        BufferedWriter bw = new BufferedWriter(new FileWriter("test.asm"));
+        bw.write(code.toString());
+        bw.close();
         System.out.println("Code generated! Assembling and running generated code.");
 
         SVMLexer lexerASM = new SVMLexer(code);

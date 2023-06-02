@@ -1,7 +1,9 @@
-int a;
-
-int fun(int b, int bb) {
-    b+bb
+int fibonacci(int n) {
+    if((n == 1) || (n == 2)) {
+        1
+    } else {
+        fibonacci(n-1) + fibonacci(n-2)
+    }
 }
 
-fun(5, 7)
+fibonacci(8)

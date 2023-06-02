@@ -15,6 +15,6 @@ public class SubNode extends BinaryIntegerOpNode {
                 right.codeGeneration() +
                 "popr T1 \n" +
                 "sub T1 A0 \n" +
-                "pushr A0 \n";
+                "popr A0 \n";
     }
 }

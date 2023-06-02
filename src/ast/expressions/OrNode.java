@@ -13,7 +13,8 @@ public class OrNode extends BinaryBooleanOpNode {
     public String codeGeneration() {
         String exitLabel = SimplanInterface.newLabel();
         return this.left.codeGeneration() +
-                "beq A0 1 " + exitLabel + "\n" +
+                "storei T1 1\n" +
+                "beq A0 T1 " + exitLabel + "\n" +
                 this.right.codeGeneration() +
                 exitLabel + ":\n";
     }

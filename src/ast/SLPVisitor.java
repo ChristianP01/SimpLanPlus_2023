@@ -57,8 +57,9 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
 
         // Visita dei parametri formali della funzione
         params.add(visit(ctx.firstParam));
-        params.add(visit(ctx.otherParams));
-
+        if(ctx.otherParams != null) {
+            params.add(visit(ctx.otherParams));
+        }
 
         // Recupero dei tipi dei parametri formali
         ArrayList<Type> paramTypes = params.stream()
