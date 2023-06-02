@@ -50,7 +50,9 @@ public class ProgDecNode implements Node {
     @Override
     public String codeGeneration() {
         StringBuilder codegen = new StringBuilder();
-
+        // necessario per far funzionare gli offset
+        codegen.append("pushr FP\n");
+        codegen.append("pushr AL\n");
         for(Node dec : this.dec) {
            codegen.append(dec.codeGeneration());
         }

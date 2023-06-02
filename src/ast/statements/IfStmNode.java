@@ -1,6 +1,7 @@
 package ast.statements;
 
 import ast.Node;
+import ast.simplanlib.SimplanInterface;
 import ast.types.Type;
 import ast.types.BoolType;
 import ast.types.ErrorType;
@@ -69,16 +70,41 @@ public class IfStmNode implements Node {
 
     @Override
     public String codeGeneration() {
-        return null;
+        String thenLabel = SimplanInterface.newLabel();
+        String endLabel = SimplanInterface.newLabel();
+
+        String thenStatements = "";
+        for(Node st : this.thenBranch) {
+            thenStatements += st.codeGeneration();
+        }
+
+        String elseStatements = "";
+        for(Node st : this.elseBranch) {
+            elseStatements += st.codeGeneration();
+        }
+
+        return this.condition.codeGeneration() +
+                "storei T1 1 \n" +
+                "beq A0 T1 " + thenLabel + "\n" +
+                elseStatements +
+                "b " + endLabel + " \n" +
+                thenLabel + ": \n" +
+                thenStatements +
+                endLabel + ": \n" ;
     }
 
     @Override
     public String toPrint(String s) {
+        String elseString = "";
+        if(this.elseBranch.size() > 0) {
+            elseString = s + "\t" + "Else branch:\n" +
+                    this.elseBranch.stream().map(st -> st.toPrint(s + "\t")).collect(Collectors.joining("\n"));
+        }
         return s + "If statement\n" +
                 this.condition.toPrint(s + "\t") +
                 s + "\t" + "Then branch:\n" +
                 this.thenBranch.stream().map(st -> st.toPrint(s + "\t")).collect(Collectors.joining("\n")) +
-                s + "\t" + "Else branch:\n" +
-                this.elseBranch.stream().map(st -> st.toPrint(s + "\t")).collect(Collectors.joining("\n"));
+                elseString;
+
     }
 }

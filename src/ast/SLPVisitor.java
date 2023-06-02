@@ -56,7 +56,9 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
         Type returnType = (Type) visit(ctx.type());
 
         // Visita dei parametri formali della funzione
-        params.add(visit(ctx.firstParam));
+        if(ctx.firstParam != null) {
+            params.add(visit(ctx.firstParam));
+        }
         if(ctx.otherParams != null) {
             params.add(visit(ctx.otherParams));
         }
@@ -157,10 +159,12 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
         ArrayList<Node> thenStms = ctx.thenBranch.stm().stream()
                 .map(this::visit)
                 .collect(Collectors.toCollection(ArrayList::new));
-
-        ArrayList<Node> elseStms = ctx.elseBranch.stm().stream()
-                .map(this::visit)
-                .collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Node> elseStms = new ArrayList<>();
+        if(ctx.elseBranch != null) {
+            elseStms = ctx.elseBranch.stm().stream()
+                    .map(this::visit)
+                    .collect(Collectors.toCollection(ArrayList::new));
+        }
 
         return new IfStmNode(cond, thenStms, elseStms);
     }

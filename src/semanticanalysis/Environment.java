@@ -25,12 +25,12 @@ public class Environment {
     }
 
     public void insert(String id, Type type, String label) {
-        this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset, label));
         this.offset++;
+        this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset, label));
     }
 
     public void insert(String id, Type type) {
-        this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset));
         this.offset++;
+        this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset));
     }
 }
