@@ -33,7 +33,7 @@ public class DecFunNode implements Node {
 
         // controllo che non sia già stato dichiarato un identificatore con lo stesso nome
         if(symTable.lookup(this.id) != null) {
-            errors.add(new SemanticError("Identifier" + this.id + " already declared in current scope."));
+            errors.add(new SemanticError("Identifier " + this.id + " already declared."));
         } else {
             // creazione di un nuovo scope, locale alla funzione
             symTable.newScope();

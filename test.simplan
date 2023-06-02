@@ -1,5 +1,7 @@
 int a;
 
-int fun(int b, int a) {
-    fun(1, true)
+int a(int b, int bb) {
+    a(1, 4)
 }
+
+a(5, 7)

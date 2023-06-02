@@ -59,11 +59,14 @@ public class Main {
             // Inizializzazione della symbol table "globale"
             SymbolTable symTable = new SymbolTable();
             ArrayList<SemanticError> semanticErrors = ast.checkSemantics(symTable, 0);
-            if(semanticErrors.size() > 0)
+            if(semanticErrors.size() > 0) {
                 System.out.println("Semantic errors found (" + semanticErrors.size() + " in total):");
+                for (SemanticError se : semanticErrors) {
+                    System.out.println(se.toString());
+                }
+            }
             else
                 System.out.println(ast.toPrint(""));
         }
-
     }
 }
