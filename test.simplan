@@ -1,5 +1,11 @@
 int x;
 int y;
+void f(int a) {
+    if(a == 1) {
+        y = 10;
+    }
+}
 x = 5;
 y = 6;
-x
+f(1);
+y

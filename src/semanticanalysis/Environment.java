@@ -25,7 +25,6 @@ public class Environment {
     }
 
     public void insert(String id, Type type, String label) {
-        this.offset++;
         this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset, label));
     }
 
