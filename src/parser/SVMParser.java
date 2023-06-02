@@ -1,16 +1,10 @@
-// Generated from /home/christian/Università/Magistrale/Compilatori/Progetto23/SimpLanPlus2023/SimpLanPlus_2023/src/parser/SVM.g4 by ANTLR 4.12.0
-package parser;
-
-import java.util.HashMap;
+package parser;// Generated from SVM.g4 by ANTLR 4.12.0
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
 public class SVMParser extends Parser {

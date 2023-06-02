@@ -1,7 +1,7 @@
 int a;
 
-int a(int b, int bb) {
-    a(1, 4)
+int fun(int b, int bb) {
+    b+bb
 }
 
 a(5, 7)

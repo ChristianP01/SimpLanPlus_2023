@@ -2,17 +2,21 @@ package compiler;
 
 import ast.Node;
 import ast.SLPVisitor;
+import ast.simplanlib.ExecuteVM;
+import ast.SVMVisitorImpl;
 import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import parser.SVMLexer;
+import parser.SVMParser;
 import parser.SimpLanPlusLexer;
 import parser.SimpLanPlusParser;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
-
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
@@ -68,5 +72,25 @@ public class Main {
             else
                 System.out.println(ast.toPrint(""));
         }
+
+        // Code generation
+        CharStream code = CharStreams.fromString(ast.codeGeneration());
+        System.out.println("Code generated! Assembling and running generated code.");
+
+        SVMLexer lexerASM = new SVMLexer(code);
+        CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
+        SVMParser parserASM = new SVMParser(tokensASM);
+
+        //parserASM.assembly();
+
+        SVMVisitorImpl visitorSVM = new SVMVisitorImpl();
+        visitorSVM.visit(parserASM.assembly());
+
+        //System.out.println("You had: "+lexerASM.lexicalErrors+" lexical errors and "+parserASM.getNumberOfSyntaxErrors()+" syntax errors.");
+        //if (lexerASM.lexicalErrors>0 || parserASM.getNumberOfSyntaxErrors()>0) System.exit(1);
+
+        System.out.println("Starting Virtual Machine...");
+        ExecuteVM vm = new ExecuteVM(visitorSVM.code);
+        vm.cpu();
     }
 }
