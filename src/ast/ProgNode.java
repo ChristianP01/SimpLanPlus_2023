@@ -1,5 +1,6 @@
 package ast;
 
+import ast.simplanlib.SimplanInterface;
 import ast.types.Type;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
@@ -25,7 +26,7 @@ public class ProgNode implements Node {
 
     @Override
     public String codeGeneration() {
-        return this.exp == null ? "" : this.exp.codeGeneration() + "halt";
+        return this.exp == null ? "" : this.exp.codeGeneration() + "halt \n";
     }
 
     @Override

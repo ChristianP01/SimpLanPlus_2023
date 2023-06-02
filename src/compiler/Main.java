@@ -73,6 +73,8 @@ public class Main {
                 System.out.println(ast.toPrint(""));
         }
 
+        System.out.println(ast.codeGeneration());
+
         // Code generation
         CharStream code = CharStreams.fromString(ast.codeGeneration());
         System.out.println("Code generated! Assembling and running generated code.");

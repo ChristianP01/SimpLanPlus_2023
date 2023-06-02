@@ -1,5 +1,6 @@
 package ast;
 
+import ast.simplanlib.SimplanInterface;
 import ast.types.Type;
 import ast.types.VoidType;
 import semanticanalysis.SemanticError;
@@ -60,7 +61,7 @@ public class ProgDecNode implements Node {
 
         codegen.append(this.exp == null ? "" : this.exp.codeGeneration());
 
-        return codegen + "halt";
+        return codegen + "halt \n" + SimplanInterface.getCode();
     }
 
     @Override

@@ -4,4 +4,4 @@ int fun(int b, int bb) {
     b+bb
 }
 
-a(5, 7)
+fun(5, 7)

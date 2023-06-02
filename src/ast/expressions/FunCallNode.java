@@ -112,7 +112,7 @@ public class FunCallNode implements Node {
                 "addi FP " + (this.params.size() + 2) + "\n" +
                 "move FP AL\n" +
                 "subi AL 1\n" +
-                "jsub " + this.semanticData.getLabel();
+                "jsub " + this.semanticData.getLabel() + "\n";
     }
 
     @Override

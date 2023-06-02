@@ -43,8 +43,14 @@ public class SymbolTable {
         this.decrementCurrentNestingLevel();
     }
 
+    // Inserire una variabile
     public void insert(String id, Type type) {
         this.symTable.get(this.currentNestingLevel).insert(id, type);
+    }
+
+    // Inserire una funzione
+    public void insert(String id, Type type, String label) {
+        this.symTable.get(this.currentNestingLevel).insert(id, type, label);
     }
 
     // Check if symbol is in current env

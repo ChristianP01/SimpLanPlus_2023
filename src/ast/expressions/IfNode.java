@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.Node;
+import ast.simplanlib.SimplanInterface;
 import ast.types.Type;
 import ast.types.BoolType;
 import ast.types.ErrorType;
@@ -56,7 +57,18 @@ public class IfNode implements Node {
 
     @Override
     public String codeGeneration() {
-        return null;
+
+        String thenLabel = SimplanInterface.newLabel();
+        String endLabel = SimplanInterface.newLabel();
+
+        return this.condition.codeGeneration() +
+                "storei T1 1 \n" +
+                "beq A0 T1 " + thenLabel + "\n" +
+                elseBranch.codeGeneration() +
+                "b " + endLabel + " \n" +
+                thenLabel + ": \n" +
+                thenBranch.codeGeneration() +
+                endLabel + ": \n" ;
     }
 
     @Override

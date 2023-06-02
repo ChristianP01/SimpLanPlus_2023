@@ -15,6 +15,6 @@ public class SumNode extends BinaryIntegerOpNode {
                 this.right.codeGeneration() +
                 "popr T1\n" +
                 "add A0 T1\n" +
-                "popr A0";
+                "popr A0\n";
     }
 }

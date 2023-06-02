@@ -69,7 +69,7 @@ public class AssgnNode implements Node {
     public String codeGeneration() {
         StringBuilder alCode = new StringBuilder();
         for(int i = 0; i < this.nestingLevel - this.semanticData.getNestingLevel(); i++) {
-            alCode.append("store T1 0(T1)");
+            alCode.append("store T1 0(T1)\n");
         }
         return this.exp.codeGeneration() +
                 "move AL T1\n" +

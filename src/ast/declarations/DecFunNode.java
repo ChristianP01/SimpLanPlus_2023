@@ -1,6 +1,7 @@
 package ast.declarations;
 
 import ast.Node;
+import ast.simplanlib.SimplanInterface;
 import ast.types.Type;
 import ast.types.ErrorType;
 import ast.types.FunType;
@@ -17,6 +18,7 @@ public class DecFunNode implements Node {
     private ArrayList<Node> decs;
     private ArrayList<Node> stms;
     private Node exp;
+    private String fun_label;
 
     public DecFunNode(FunType type, String id, ArrayList<Node> params, ArrayList<Node> decs, ArrayList<Node> stms, Node exp) {
         this.type = type;
@@ -38,8 +40,10 @@ public class DecFunNode implements Node {
             // creazione di un nuovo scope, locale alla funzione
             symTable.newScope();
 
+            this.fun_label = SimplanInterface.newFunLabel();
+
             // inserimento della funzione nello scope corrente per permettere chiamate ricorsive
-            symTable.insert(this.id, this.type);
+            symTable.insert(this.id, this.type, this.fun_label);
 
             // controllo semantica dei parametri e conseguente inserimento nella symtable
             for (Node param : this.params) {
@@ -66,13 +70,11 @@ public class DecFunNode implements Node {
                 }
             }
 
-
-
             // uscita dallo scope
             symTable.exitScope();
 
             // inserimento della funzione nello scope esterno
-            symTable.insert(this.id, this.type);
+            symTable.insert(this.id, this.type, this.fun_label);
         }
         return errors;
     }
@@ -112,7 +114,8 @@ public class DecFunNode implements Node {
 
         String expCode = (this.exp == null) ? "" : this.exp.codeGeneration();
 
-        return "pushr RA\n" +
+        SimplanInterface.putCode(this.fun_label + ": \n" +
+                "pushr RA\n" +
                 decCodes +
                 stmCodes +
                 expCode +
@@ -121,7 +124,9 @@ public class DecFunNode implements Node {
                 "popr FP\n" +
                 "move FP AL\n" +
                 "subi AL 1\n" +
-                "rsub RA\n";
+                "rsub RA\n");
+
+        return "push " + this.fun_label + "\n"; // TODO Capire cosa faccia
     }
 
     @Override

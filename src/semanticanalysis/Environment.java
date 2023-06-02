@@ -1,5 +1,6 @@
 package semanticanalysis;
 
+import ast.types.FunType;
 import ast.types.Type;
 
 import java.util.HashMap;
@@ -23,10 +24,13 @@ public class Environment {
         return this.environment.get(id);
     }
 
-    public void insert(String id, Type type) {
-        // si incrementa l'offset quando si inserisce una nuova variabile
+    public void insert(String id, Type type, String label) {
         this.offset++;
-        // il valore initialized è impostato a false
+        this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset, label));
+    }
+
+    public void insert(String id, Type type) {
+        this.offset++;
         this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset));
     }
 }
