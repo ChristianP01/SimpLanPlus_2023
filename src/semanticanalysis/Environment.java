@@ -28,6 +28,11 @@ public class Environment {
         this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset, label));
     }
 
+    // per permettere chiamate ricorsive
+    public void insert(String id, Type type, String label, int defNestingLevel) {
+        this.environment.put(id, new STentry(type, defNestingLevel, false, this.offset, label));
+    }
+
     public void insert(String id, Type type) {
         this.offset++;
         this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset));

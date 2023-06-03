@@ -1,10 +1,16 @@
 int x;
-int fibonacci(int n) {
-    if((n == 1) || (n == 2)) {
+void f(int n) {
+    void g(int n) {
+        x = x * n;
+    }
 
-        1
+    if(n == 0) {
+        x = x;
     } else {
-        fibonacci(n - 1) + fibonacci(n - 2)
+        g(n);
+        f(n - 1);
     }
 }
-fibonacci(3);
+x = 1;
+f(5);
+x

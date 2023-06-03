@@ -37,13 +37,14 @@ public class DecFunNode implements Node {
         if(symTable.lookup(this.id) != null) {
             errors.add(new SemanticError("Identifier " + this.id + " already declared."));
         } else {
+
             // creazione di un nuovo scope, locale alla funzione
             symTable.newScope();
 
             this.fun_label = SimplanInterface.newFunLabel();
 
             // inserimento della funzione nello scope corrente per permettere chiamate ricorsive
-            symTable.insert(this.id, this.type, this.fun_label);
+            symTable.insert(this.id, this.type, nesting, this.fun_label);
 
             // controllo semantica dei parametri e conseguente inserimento nella symtable
             for (Node param : this.params) {
@@ -74,7 +75,7 @@ public class DecFunNode implements Node {
             symTable.exitScope();
 
             // inserimento della funzione nello scope esterno
-            symTable.insert(this.id, this.type, this.fun_label);
+            symTable.insert(this.id, this.type, nesting, this.fun_label);
         }
         return errors;
     }

@@ -94,7 +94,7 @@ public class FunCallNode implements Node {
     public String codeGeneration() {
         String newAl = "";
         for(int i = 0; i < this.callNesting - this.semanticData.getNestingLevel(); i++) {
-            newAl = "store T1 0(T1)\n";
+            newAl += "store T1 0(T1)\n";
         }
 
         String parametersCode = "";

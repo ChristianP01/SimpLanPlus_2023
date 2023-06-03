@@ -15,6 +15,6 @@ public class MultNode extends BinaryIntegerOpNode {
                 right.codeGeneration() +
                 "popr T1 \n" +
                 "mul A0 T1 \n" +
-                "pushr A0 \n";
+                "popr A0 \n";
     }
 }

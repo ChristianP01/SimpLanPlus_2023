@@ -49,8 +49,8 @@ public class SymbolTable {
     }
 
     // Inserire una funzione
-    public void insert(String id, Type type, String label) {
-        this.symTable.get(this.currentNestingLevel).insert(id, type, label);
+    public void insert(String id, Type type, int defNestingLevel, String label) {
+        this.symTable.get(this.currentNestingLevel).insert(id, type, label, defNestingLevel);
     }
 
     // Check if symbol is in current env

@@ -15,6 +15,6 @@ public class DivNode extends BinaryIntegerOpNode {
                 right.codeGeneration() +
                 "popr T1 \n" +
                 "div T1 A0 \n" +
-                "pushr A0 \n";
+                "popr A0 \n";
     }
 }
