@@ -1,16 +1,2 @@
-int x;
-void f(int n) {
-    void g(int n) {
-        x = x * n;
-    }
-
-    if(n == 0) {
-        x = x;
-    } else {
-        g(n);
-        f(n - 1);
-    }
-}
-x = 1;
-f(5);
-x
+int a;
+a+true

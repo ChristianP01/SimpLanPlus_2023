@@ -21,6 +21,7 @@ public class BinaryOpNode implements Node {
         this.operandsType = operandsType;
         this.returnType = returnType;
         this.opName = opName;
+
     }
 
     @Override
@@ -28,8 +29,8 @@ public class BinaryOpNode implements Node {
         ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
         errors.addAll(this.left.checkSemantics(symTable, nesting));
         errors.addAll(this.right.checkSemantics(symTable, nesting));
-
         return errors;
+
     }
 
     @Override

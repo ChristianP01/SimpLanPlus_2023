@@ -4,6 +4,8 @@ import ast.Node;
 import ast.SLPVisitor;
 import ast.simplanlib.ExecuteVM;
 import ast.SVMVisitorImpl;
+import ast.types.ErrorType;
+import ast.types.Type;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -69,36 +71,37 @@ public class Main {
                     System.out.println(se.toString());
                 }
             } else {
-                System.out.println(ast.toPrint(""));
-                String codegen = ast.codeGeneration();
-                System.out.println(codegen);
+                Type astTypeCheck = ast.typeCheck();
+                if (astTypeCheck instanceof ErrorType ) {
+                    System.out.println("Type checking error(s) occurred.");
+                    return;
+                } else {
+                    System.out.println(ast.toPrint(""));
+                    String codegen = ast.codeGeneration();
+                    System.out.println(codegen);
 
-                // Code generation
-                CharStream code = CharStreams.fromString(codegen);
-                // scrittura del codice su file
-                BufferedWriter bw = new BufferedWriter(new FileWriter("test.asm"));
-                bw.write(code.toString());
-                bw.close();
-                System.out.println("Code generated! Assembling and running generated code.");
+                    // Code generation
+                    CharStream code = CharStreams.fromString(codegen);
+                    // scrittura del codice su file
+                    BufferedWriter bw = new BufferedWriter(new FileWriter("test.asm"));
+                    bw.write(code.toString());
+                    bw.close();
+                    System.out.println("Code generated! Assembling and running generated code.");
 
-                SVMLexer lexerASM = new SVMLexer(code);
-                CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
-                SVMParser parserASM = new SVMParser(tokensASM);
+                    SVMLexer lexerASM = new SVMLexer(code);
+                    CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
+                    SVMParser parserASM = new SVMParser(tokensASM);
 
-                //parserASM.assembly();
+                    //parserASM.assembly();
 
-                SVMVisitorImpl visitorSVM = new SVMVisitorImpl();
-                visitorSVM.visit(parserASM.assembly());
+                    SVMVisitorImpl visitorSVM = new SVMVisitorImpl();
+                    visitorSVM.visit(parserASM.assembly());
 
-                //System.out.println("You had: "+lexerASM.lexicalErrors+" lexical errors and "+parserASM.getNumberOfSyntaxErrors()+" syntax errors.");
-                //if (lexerASM.lexicalErrors>0 || parserASM.getNumberOfSyntaxErrors()>0) System.exit(1);
-
-                System.out.println("Starting Virtual Machine...");
-                ExecuteVM vm = new ExecuteVM(visitorSVM.code);
-                vm.cpu();
+                    System.out.println("Starting Virtual Machine...");
+                    ExecuteVM vm = new ExecuteVM(visitorSVM.code);
+                    vm.cpu();
+                }
             }
         }
-
-
     }
 }

@@ -22,10 +22,8 @@ public class AssgnNode implements Node {
         this.exp = exp;
     }
 
-
     @Override
     public ArrayList<SemanticError> checkSemantics(SymbolTable symTable, int nesting) {
-        // TODO modificare per aggiungere alla symbol table che la variabile è ora utilizzata
         ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
         this.nestingLevel = nesting;
 
@@ -71,6 +69,7 @@ public class AssgnNode implements Node {
         for(int i = 0; i < this.nestingLevel - this.semanticData.getNestingLevel(); i++) {
             alCode.append("store T1 0(T1)\n");
         }
+
         return this.exp.codeGeneration() +
                 "move AL T1\n" +
                 alCode +
