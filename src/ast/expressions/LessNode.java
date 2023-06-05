@@ -3,10 +3,16 @@ package ast.expressions;
 import ast.Node;
 import ast.simplanlib.SimplanInterface;
 import ast.types.BoolType;
+import ast.types.Type;
 
 public class LessNode extends BinaryIntegerOpNode {
     public LessNode(Node left, Node right) {
         super(left, right, new BoolType(), "<");
+    }
+
+    @Override
+    public Type typeCheck() {
+        return super.typeCheck();
     }
 
     @Override

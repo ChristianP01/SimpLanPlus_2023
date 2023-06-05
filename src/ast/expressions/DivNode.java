@@ -2,10 +2,16 @@ package ast.expressions;
 
 import ast.Node;
 import ast.types.IntType;
+import ast.types.Type;
 
 public class DivNode extends BinaryIntegerOpNode {
     public DivNode(Node left, Node right) {
         super(left, right, new IntType(),"division");
+    }
+
+    @Override
+    public Type typeCheck() {
+        return super.typeCheck();
     }
 
     @Override

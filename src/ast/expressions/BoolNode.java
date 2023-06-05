@@ -35,4 +35,9 @@ public class BoolNode implements Node {
     public String toPrint(String s) {
         return s + this.value + "\n";
     }
+
+    @Override
+    public String toString() {
+        return "bool";
+    }
 }

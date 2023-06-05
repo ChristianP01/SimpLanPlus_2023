@@ -64,11 +64,6 @@ public class DecFunNode implements Node {
             // controllo dell'espressione (se presente)
             if(this.exp != null) {
                 errors.addAll(this.exp.checkSemantics(symTable, symTable.getCurrentNestingLevel()));
-
-                if(!this.exp.typeCheck().isEqual(this.type.getReturnType())) {
-                    errors.add(new SemanticError("ERROR: Cannot return " +
-                            this.exp.typeCheck() + " type in a " + this.type.getReturnType() + " function."));
-                }
             }
 
             // uscita dallo scope
@@ -82,23 +77,23 @@ public class DecFunNode implements Node {
 
     @Override
     public Type typeCheck() {
-        for(Node dec : this.decs) {
+
+        for (Node dec : this.decs) {
             dec.typeCheck();
         }
 
-        for(Node stm : this.stms) {
+        for (Node stm : this.stms) {
             stm.typeCheck();
         }
 
-        // se l'ultima espressione non è presente, la funzione ritorna tipo void
-        Type expType = this.exp != null ? this.exp.typeCheck() : new VoidType();
-        if(!expType.isEqual(this.type.getReturnType())) {
+        if (!this.exp.typeCheck().isEqual(this.type.getReturnType())) {
             System.out.println("Function " + this.id + " should return a type " + this.type.getReturnType().toString() +
-                    ", returns a type " + expType.toString() + " instead.");
+                    ", returns a type " + this.exp.toString() + " instead.");
+
             return new ErrorType();
-        } else {
-            return expType;
         }
+
+        return this.type.getReturnType();
     }
 
     @Override

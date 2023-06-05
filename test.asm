@@ -1,12 +1,13 @@
 pushr FP
 pushr AL
-subi SP 1
-move AL T1
-subi T1 1
-store A0 0(T1)
-pushr A0
-storei A0 2
-popr T1
-add A0 T1
-popr A0
 halt 
+
+function0: 
+pushr RA
+storei A0 1
+popr RA
+addi SP 1
+popr FP
+move FP AL
+subi AL 1
+rsub RA

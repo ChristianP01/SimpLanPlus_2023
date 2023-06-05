@@ -50,43 +50,36 @@ public class FunCallNode implements Node {
     @Override
     public Type typeCheck() {
 
-        if(this.semanticData == null) {
-            System.out.println("Function not declared");
-            return new ErrorType();
-        } else {
-            Type funType = this.semanticData.getType();
-            if(funType instanceof FunType) {
-                ArrayList<Type> typeParams =  ((FunType) funType).getParamTypes();
-                int numParam = typeParams.size();
+        Type funType = this.semanticData.getType();
+        if(funType instanceof FunType) {
+            ArrayList<Type> typeParams =  ((FunType) funType).getParamTypes();
+            int numParam = typeParams.size();
 
-                // Controllo se la funzione è stata chiamata con un numero diverso di parametri rispetto alla dichiarazione
-                if(this.params.size() != numParam) {
-                    System.out.println("Expected " + numParam + " parameter(s) for function "
-                            + this.id + ", got " + this.params.size() + " instead.");
-                    return new ErrorType();
-                }
-                else {
-                    // Se il numero di parametri è corretto, controllo il loro tipo
-
-                    boolean correctParam = true;
-                    for (int i = 0; i < this.params.size() && correctParam; i++) {
-                        if (!this.params.get(i).typeCheck().toString().equals(typeParams.get(i).toString())) {
-                                correctParam = false;
-                                System.out.println("Error on parameter #" + (i+1));
-                                System.out.println("Requested param is " + typeParams.get(i).toPrint("") +
-                                "but " + this.params.get(i).typeCheck().toPrint("") + "was given.");
-
-
-                        }
-                    }
-
-                    return correctParam? ((FunType) this.semanticData.getType()).getReturnType() : new ErrorType();
-
-                    }
-                } else {
-                System.out.println("Identifier " + this.id + " is not a function and cannot be called.");
+            // Controllo se la funzione è stata chiamata con un numero diverso di parametri rispetto alla dichiarazione
+            if(this.params.size() != numParam) {
+                System.out.println("Expected " + numParam + " parameter(s) for function "
+                        + this.id + ", got " + this.params.size() + " instead.");
                 return new ErrorType();
             }
+            else {
+                // Se il numero di parametri è corretto, controllo il loro tipo
+
+                boolean correctParam = true;
+                for (int i = 0; i < this.params.size() && correctParam; i++) {
+                    if (!this.params.get(i).typeCheck().toString().equals(typeParams.get(i).toString())) {
+                            correctParam = false;
+                            System.out.println("Error on parameter #" + (i+1));
+                            System.out.println("Requested param is " + typeParams.get(i).toPrint("") +
+                            "but " + this.params.get(i).typeCheck().toPrint("") + "was given.");
+                    }
+                }
+
+                return correctParam? ((FunType) this.semanticData.getType()).getReturnType() : new ErrorType();
+
+                }
+            } else {
+            System.out.println("Identifier " + this.id + " is not a function and cannot be called.");
+            return new ErrorType();
         }
     }
 

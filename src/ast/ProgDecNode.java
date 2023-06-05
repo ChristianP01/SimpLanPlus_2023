@@ -1,6 +1,7 @@
 package ast;
 
 import ast.simplanlib.SimplanInterface;
+import ast.types.ErrorType;
 import ast.types.Type;
 import ast.types.VoidType;
 import semanticanalysis.SemanticError;
@@ -41,10 +42,17 @@ public class ProgDecNode implements Node {
 
     @Override
     public Type typeCheck() {
-        this.dec.stream().map(Node::typeCheck);
-        this.stm.stream().map(Node::typeCheck);
+        for (Node dec : this.dec) {
+            Type dec_tc = dec.typeCheck();
+            return !(dec_tc instanceof ErrorType) ? dec_tc : new ErrorType();
+        }
 
-        return this.exp != null ? this.exp.typeCheck() : new VoidType();
+        for (Node stm : this.stm) {
+            Type stm_tc = stm.typeCheck();
+            return !(stm_tc instanceof ErrorType) ? stm_tc : new ErrorType();
+        }
+
+        return this.exp != null ? this.exp.typeCheck() : null;
     }
 
     @Override

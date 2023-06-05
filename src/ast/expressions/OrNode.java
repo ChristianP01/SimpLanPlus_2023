@@ -3,10 +3,16 @@ package ast.expressions;
 import ast.Node;
 import ast.simplanlib.SimplanInterface;
 import ast.types.BoolType;
+import ast.types.Type;
 
 public class OrNode extends BinaryBooleanOpNode {
     public OrNode(Node left, Node right) {
         super(left, right, new BoolType(), "or");
+    }
+
+    @Override
+    public Type typeCheck() {
+        return super.typeCheck();
     }
 
     @Override

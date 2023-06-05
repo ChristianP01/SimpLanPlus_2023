@@ -71,10 +71,8 @@ public class Main {
                     System.out.println(se.toString());
                 }
             } else {
-                Type astTypeCheck = ast.typeCheck();
-                if (astTypeCheck instanceof ErrorType ) {
+                if (ast.typeCheck() instanceof ErrorType) {
                     System.out.println("Type checking error(s) occurred.");
-                    return;
                 } else {
                     System.out.println(ast.toPrint(""));
                     String codegen = ast.codeGeneration();
