@@ -5,7 +5,6 @@ import ast.SLPVisitor;
 import ast.simplanlib.ExecuteVM;
 import ast.SVMVisitorImpl;
 import ast.types.ErrorType;
-import ast.types.Type;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;

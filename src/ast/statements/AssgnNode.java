@@ -1,6 +1,7 @@
 package ast.statements;
 
 import ast.Node;
+import ast.expressions.IdNode;
 import ast.types.FunType;
 import ast.types.Type;
 import ast.types.ErrorType;
@@ -30,6 +31,8 @@ public class AssgnNode implements Node {
         this.semanticData = symTable.lookup(this.id);
         if(this.semanticData == null) {
             errors.add(new SemanticError("Variable " + this.id + " not declared."));
+        } else {
+            this.semanticData.initialize();
         }
 
         errors.addAll(this.exp.checkSemantics(symTable, nesting));

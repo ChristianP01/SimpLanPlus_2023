@@ -1,3 +1,6 @@
-int fun() {
-    true
-}
+int a; int b; int c ; c = 2 ;
+if (c > 1) {
+    b = c;
+    }
+   else { a = b ; }
+   }

@@ -34,7 +34,13 @@ public class IdNode implements Node {
         // se la funzione lookup non ha ritornato nulla, allora la variabile non è stata definita
         if(this.semanticData == null) {
             errors.add(new SemanticError("Variable " + this.id + " not declared."));
+        } else {
+            if(!this.semanticData.isInitialized()) {
+                errors.add(new SemanticError("Variable " + this.id + " not initialized."));
+            }
         }
+
+
 
         return errors;
     }

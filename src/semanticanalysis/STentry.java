@@ -26,6 +26,14 @@ public class STentry {
         this.label = label;
     }
 
+    public boolean isInitialized() {
+        return this.initialized;
+    }
+
+    public void initialize() {
+        this.initialized = true;
+    }
+
     public Type getType() {
         return type;
     }

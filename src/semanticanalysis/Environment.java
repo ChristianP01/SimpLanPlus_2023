@@ -33,6 +33,7 @@ public class Environment {
         this.environment.put(id, new STentry(type, defNestingLevel, false, this.offset, label));
     }
 
+    // Per variabili
     public void insert(String id, Type type) {
         this.offset++;
         this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset));

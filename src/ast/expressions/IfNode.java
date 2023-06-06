@@ -29,6 +29,8 @@ public class IfNode implements Node {
         errors.addAll(this.thenBranch.checkSemantics(symTable, nesting));
         errors.addAll(this.elseBranch.checkSemantics(symTable, nesting));
 
+
+
         return errors;
     }
 

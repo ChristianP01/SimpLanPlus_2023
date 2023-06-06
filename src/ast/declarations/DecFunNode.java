@@ -86,9 +86,11 @@ public class DecFunNode implements Node {
             stm.typeCheck();
         }
 
-        if (!this.exp.typeCheck().isEqual(this.type.getReturnType())) {
+        Type returnType = this.exp != null ? this.exp.typeCheck() : new VoidType();
+
+        if (!returnType.isEqual(this.type.getReturnType())) {
             System.out.println("Function " + this.id + " should return a type " + this.type.getReturnType().toString() +
-                    ", returns a type " + this.exp.toString() + " instead.");
+                    ", returns a type " + returnType.toString() + " instead.");
 
             return new ErrorType();
         }

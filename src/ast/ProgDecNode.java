@@ -52,7 +52,7 @@ public class ProgDecNode implements Node {
             return !(stm_tc instanceof ErrorType) ? stm_tc : new ErrorType();
         }
 
-        return this.exp != null ? this.exp.typeCheck() : null;
+        return this.exp != null ? this.exp.typeCheck() : new VoidType();
     }
 
     @Override
