@@ -52,4 +52,8 @@ public class Environment {
         this.offset++;
         this.environment.put(id, new STentry(type, this.nestingLevel, false, this.offset));
     }
+
+    public void increaseOffset() {
+        this.offset++;
+    }
 }

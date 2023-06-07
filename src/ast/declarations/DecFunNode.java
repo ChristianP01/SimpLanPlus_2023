@@ -54,6 +54,9 @@ public class DecFunNode implements Node {
                 symTable.lookup(param.getId()).initialize();
             }
 
+            // incremento l'offset per tener conto dello spazio occupato dal return address
+            symTable.increaseOffset();
+
             // controllo delle dichiarazioni
             for(Node dec : this.decs) {
                 errors.addAll(dec.checkSemantics(symTable, symTable.getCurrentNestingLevel()));
@@ -120,6 +123,7 @@ public class DecFunNode implements Node {
                 decCodes +
                 stmCodes +
                 expCode +
+                "addi SP " + this.decs.size() + "\n" +
                 "popr RA\n" +
                 "addi SP " + (this.params.size() + 1) + "\n" +
                 "popr FP\n" +

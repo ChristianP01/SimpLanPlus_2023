@@ -101,4 +101,8 @@ public class SymbolTable {
         return semanticInfo;
 
     }
+
+    public void increaseOffset() {
+        this.symTable.get(this.currentNestingLevel).increaseOffset();
+    }
 }
