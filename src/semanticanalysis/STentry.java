@@ -26,6 +26,18 @@ public class STentry {
         this.label = label;
     }
 
+    public STentry(STentry copyEntry) {
+        this.type = copyEntry.type;
+        this.nestingLevel = copyEntry.nestingLevel;
+        this.initialized = copyEntry.initialized;
+        this.offset = copyEntry.offset;
+        this.label = copyEntry.label;
+    }
+
+    public void deinitialize() {
+        this.initialized = false;
+    }
+
     public boolean isInitialized() {
         return this.initialized;
     }

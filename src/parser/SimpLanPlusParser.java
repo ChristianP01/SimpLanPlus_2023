@@ -249,8 +249,6 @@ public class SimpLanPlusParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FunDecContext extends DecContext {
-		public ParamContext firstParam;
-		public ParamContext otherParams;
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
@@ -321,7 +319,7 @@ public class SimpLanPlusParser extends Parser {
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0)) {
 					{
 					setState(42);
-					((FunDecContext)_localctx).firstParam = param();
+					param();
 					setState(47);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
@@ -331,7 +329,7 @@ public class SimpLanPlusParser extends Parser {
 						setState(43);
 						match(T__2);
 						setState(44);
-						((FunDecContext)_localctx).otherParams = param();
+						param();
 						}
 						}
 						setState(49);

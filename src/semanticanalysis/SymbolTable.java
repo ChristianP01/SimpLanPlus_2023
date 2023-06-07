@@ -13,6 +13,16 @@ public class SymbolTable {
         this.newScope();
     }
 
+    public SymbolTable(SymbolTable copyST) {
+        this.symTable = new ArrayList<>();
+
+        for (Environment env : copyST.symTable) {
+            this.symTable.add(new Environment(env));
+        }
+
+        this.currentNestingLevel = copyST.currentNestingLevel;
+    }
+
     public int getCurrentNestingLevel() {
         return this.currentNestingLevel;
     }
@@ -31,6 +41,21 @@ public class SymbolTable {
     }
 
     public ArrayList<Environment> getSymbolTable() { return this.symTable; }
+
+    // Recupera l'array di variabili inizializzate
+    public ArrayList<String> searchInits() {
+        ArrayList<String> initVars = new ArrayList<>();
+
+        for(Environment env : this.symTable) {
+            env.getEnvironment().forEach((key, value) -> {
+                if(value.isInitialized())
+                    initVars.add(key);
+            });
+        }
+
+        return initVars;
+    }
+
 
     public void newScope() {
         this.incrementCurrentNestingLevel();

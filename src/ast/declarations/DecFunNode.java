@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
 public class DecFunNode implements Node {
     private FunType type;
     private String id;
-    private ArrayList<Node> params;
+    private ArrayList<DecNode> params;
     private ArrayList<Node> decs;
     private ArrayList<Node> stms;
     private Node exp;
     private String fun_label;
 
-    public DecFunNode(FunType type, String id, ArrayList<Node> params, ArrayList<Node> decs, ArrayList<Node> stms, Node exp) {
+    public DecFunNode(FunType type, String id, ArrayList<DecNode> params, ArrayList<Node> decs, ArrayList<Node> stms, Node exp) {
         this.type = type;
         this.id = id;
         this.params = params;
@@ -47,8 +47,11 @@ public class DecFunNode implements Node {
             symTable.insert(this.id, this.type, nesting, this.fun_label);
 
             // controllo semantica dei parametri e conseguente inserimento nella symtable
-            for (Node param : this.params) {
+            for (DecNode param : this.params) {
                 errors.addAll(param.checkSemantics(symTable, symTable.getCurrentNestingLevel()));
+
+                // Inizializzo ogni parametro formale della funzione
+                symTable.lookup(param.getId()).initialize();
             }
 
             // controllo delle dichiarazioni
@@ -124,7 +127,7 @@ public class DecFunNode implements Node {
                 "subi AL 1\n" +
                 "rsub RA\n");
 
-        return ""; // TODO Capire cosa faccia
+        return "";
     }
 
     @Override

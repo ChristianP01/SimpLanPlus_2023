@@ -29,6 +29,10 @@ public class DecNode implements Node {
         return errors;
     }
 
+    public String getId() {
+        return this.id;
+    }
+
     @Override
     public Type typeCheck() {
         return (Type) this.type;
@@ -37,7 +41,7 @@ public class DecNode implements Node {
     @Override
     public String codeGeneration() {
         return "subi SP 1\n";
-    } // TODO Inserire "popr SP"?
+    }
 
     @Override
     public String toPrint(String s) {

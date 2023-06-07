@@ -6,6 +6,7 @@ import ast.types.Type;
 import ast.types.BoolType;
 import ast.types.ErrorType;
 import ast.types.VoidType;
+import semanticanalysis.STentry;
 import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
@@ -30,12 +31,35 @@ public class IfStmNode implements Node {
 
         errors.addAll(this.condition.checkSemantics(symTable, nesting));
 
+        // Copio la symbol table attuale e la assegno al branch else
+        SymbolTable copiedST = new SymbolTable(symTable);
+
         for(Node n : thenBranch) {
             errors.addAll(n.checkSemantics(symTable, nesting));
         }
 
         for(Node n : elseBranch) {
-            errors.addAll(n.checkSemantics(symTable, nesting));
+            errors.addAll(n.checkSemantics(copiedST, nesting));
+        }
+
+        ArrayList<String> symTableInits = symTable.searchInits();
+        ArrayList<String> copiedSTInits = copiedST.searchInits();
+
+        // Controllo se sono state inizializzate variabili solo in un ramo dell'if
+        if(symTableInits.size() != copiedSTInits.size() || !symTableInits.containsAll(copiedSTInits)) {
+            ArrayList<String> copySTInits = new ArrayList<>(symTableInits);
+
+            symTableInits.removeAll(copiedSTInits);
+            copiedSTInits.removeAll(copySTInits);
+
+            ArrayList<STentry> differencesBranch = new ArrayList<>();
+
+            // Tutte le entry che non sono state dichiarate in entrambi i branch verranno de-inizializzate
+            for (String varID : symTableInits) {
+                STentry entry = symTable.lookup(varID);
+                differencesBranch.add(entry);
+                entry.deinitialize();
+            }
         }
 
         return errors;

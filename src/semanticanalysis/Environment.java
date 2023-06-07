@@ -3,7 +3,9 @@ package semanticanalysis;
 import ast.types.FunType;
 import ast.types.Type;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Environment {
     private HashMap<String, STentry> environment;
@@ -16,9 +18,21 @@ public class Environment {
         this.offset = 0;
     }
 
+    public Environment(Environment copyEnv) {
+        this.environment = new HashMap<>();
+
+        for(Map.Entry<String, STentry> entry : copyEnv.environment.entrySet()) {
+            this.environment.put(entry.getKey(), new STentry(entry.getValue()));
+        }
+
+        this.nestingLevel = copyEnv.nestingLevel;
+        this.offset = copyEnv.offset;
+    }
+
     protected HashMap<String, STentry> getEnvironment() {
         return this.environment;
     }
+
 
     public STentry lookup(String id) {
         return this.environment.get(id);

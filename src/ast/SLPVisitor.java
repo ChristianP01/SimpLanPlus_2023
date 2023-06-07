@@ -50,17 +50,14 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
     @Override
     public Node visitFunDec(SimpLanPlusParser.FunDecContext ctx) {
         String id = ctx.ID().getText();
-        ArrayList<Node> params = new ArrayList<>();
+        ArrayList<DecNode> params = new ArrayList<>();
 
         // tipo di ritorno della funzione
         Type returnType = (Type) visit(ctx.type());
 
         // Visita dei parametri formali della funzione
-        if(ctx.firstParam != null) {
-            params.add(visit(ctx.firstParam));
-        }
-        if(ctx.otherParams != null) {
-            params.add(visit(ctx.otherParams));
+        for(SimpLanPlusParser.ParamContext param : ctx.param()) {
+            params.add((DecNode)this.visit(param));
         }
 
         // Recupero dei tipi dei parametri formali

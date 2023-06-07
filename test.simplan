@@ -1,6 +1,5 @@
-int a; int b; int c ; c = 2 ;
-if (c > 1) {
-    b = c;
-    }
-   else { a = b ; }
-   }
+void h(int n){
+          int x ; int y ;
+          if (n==0){ x = n+1 ;} else { h(n-1) ; x = n ; y = x ;}
+     }
+     h(5) ;
