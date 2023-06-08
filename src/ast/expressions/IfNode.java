@@ -44,14 +44,16 @@ public class IfNode implements Node {
             symTableInits.removeAll(copiedSTInits);
             copiedSTInits.removeAll(copySTInits);
 
-            //ArrayList<STentry> differencesBranch = new ArrayList<>();
-
             // Tutte le entry che non sono state dichiarate in entrambi i branch verranno de-inizializzate
-            for (String varID : symTableInits) {
+            symTableInits.forEach((varID) -> {
                 STentry entry = symTable.lookup(varID);
-                //differencesBranch.add(entry);
                 entry.deinitialize();
-            }
+            });
+
+            copiedSTInits.forEach((varID) -> {
+                STentry entry = symTable.lookup(varID);
+                entry.deinitialize();
+            });
         }
 
         return errors;

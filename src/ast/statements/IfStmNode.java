@@ -54,14 +54,11 @@ public class IfStmNode implements Node {
 
             // Tutte le entry che non sono state dichiarate in entrambi i branch verranno de-inizializzate
             symTableInits.forEach((varID) -> {
-                System.out.println("Variabile " + varID + " definita solamente nel then branch");
                 STentry entry = symTable.lookup(varID);
                 entry.deinitialize();
             });
 
-            // Tutte le entry che non sono state dichiarate in entrambi i branch verranno de-inizializzate
             copiedSTInits.forEach((varID) -> {
-                System.out.println("Variabile " + varID + " definita solamente nell'else branch");
                 STentry entry = symTable.lookup(varID);
                 entry.deinitialize();
             });
