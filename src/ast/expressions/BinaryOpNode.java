@@ -7,6 +7,7 @@ import semanticanalysis.SemanticError;
 import semanticanalysis.SymbolTable;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class BinaryOpNode implements Node {
     protected final Node left;
@@ -30,7 +31,6 @@ public class BinaryOpNode implements Node {
         errors.addAll(this.left.checkSemantics(symTable, nesting));
         errors.addAll(this.right.checkSemantics(symTable, nesting));
         return errors;
-
     }
 
     @Override
@@ -38,7 +38,8 @@ public class BinaryOpNode implements Node {
         Type leftType = this.left.typeCheck();
         Type rightType = this.right.typeCheck();
 
-        if(leftType.isEqual(this.operandsType) && rightType.isEqual(this.operandsType)) {
+        if(Objects.equals(leftType.toString(), this.operandsType.toString()) &&
+                Objects.equals(rightType.toString(), this.operandsType.toString())) {
             return this.returnType;
         } else {
             System.out.println("Type mismatch: non-" + this.operandsType.toString() + " in " + this.opName);

@@ -43,11 +43,6 @@ public class AssgnNode implements Node {
     @Override
     public Type typeCheck() {
 
-        if(this.semanticData == null) {
-            System.out.println("Variable " + this.id + " not declared.");
-            return new ErrorType();
-        }
-
         Type idType = this.semanticData.getType();
 
         if(idType instanceof VoidType || idType instanceof FunType) {

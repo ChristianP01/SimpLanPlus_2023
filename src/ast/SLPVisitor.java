@@ -225,7 +225,13 @@ public class SLPVisitor extends SimpLanPlusBaseVisitor<Node> {
         Node left = visit(ctx.left);
         Node right = visit(ctx.right);
 
-        return Objects.equals(ctx.op.getText(), "+") ? new SumNode(left, right) : new SubNode(left, right);
+        if(Objects.equals(ctx.op.getText(), "+")) {
+            return new SumNode(left, right);
+        } else {
+            return new SubNode(left, right);
+        }
+
+        //return Objects.equals(ctx.op.getText(), "+") ? new SumNode(left, right) : new SubNode(left, right);
     }
 
     @Override

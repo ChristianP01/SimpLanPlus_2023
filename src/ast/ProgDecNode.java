@@ -43,16 +43,20 @@ public class ProgDecNode implements Node {
     @Override
     public Type typeCheck() {
         for (Node dec : this.dec) {
-            Type dec_tc = dec.typeCheck();
-            return !(dec_tc instanceof ErrorType) ? dec_tc : new ErrorType();
+            if (dec.typeCheck() instanceof ErrorType)
+                return new ErrorType();
         }
 
         for (Node stm : this.stm) {
-            Type stm_tc = stm.typeCheck();
-            return !(stm_tc instanceof ErrorType) ? stm_tc : new ErrorType();
+            if (stm.typeCheck() instanceof ErrorType)
+                return new ErrorType();
         }
 
-        return this.exp != null ? this.exp.typeCheck() : new VoidType();
+        if (this.exp == null) {
+            return new VoidType();
+        } else {
+            return this.exp.typeCheck();
+        }
     }
 
     @Override
