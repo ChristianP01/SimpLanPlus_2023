@@ -35,7 +35,7 @@ public class Main {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
     public static void main(String[] args) throws Exception {
-        String filename = "test.simplan";
+        String filename = "test/es8.simplan";
         FileInputStream sourceFile;
 
         try {
