@@ -26,14 +26,8 @@ import java.util.ArrayList;
 public class Main {
     // colori
     public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
+
     public static void main(String[] args) throws Exception {
         String filename = "test/es8.simplan";
         FileInputStream sourceFile;
@@ -71,9 +65,9 @@ public class Main {
         System.out.println("[SLPC] Finished parsing process. ");
 
         if (listener.getErrorList().size() > 0) {
-            System.out.println("[SLPC] Lexical error(s) occurred (" + listener.getErrorList().size() + " in total):");
+            System.out.println(ANSI_RED + "[SLPC] Lexical error(s) occurred (" + listener.getErrorList().size() + " in total):");
             for(String e : listener.getErrorList()) {
-                System.out.println(ANSI_RED + '\t' + e + ANSI_RESET);
+                System.out.println('\t' + e + ANSI_RESET);
             }
         }
         else {
@@ -81,13 +75,16 @@ public class Main {
             SymbolTable symTable = new SymbolTable();
             ArrayList<SemanticError> semanticErrors = ast.checkSemantics(symTable, 0);
             if(semanticErrors.size() > 0) {
-                System.out.println("Semantic errors found (" + semanticErrors.size() + " in total):");
+                System.out.println(ANSI_RED + "[SLPC] Semantic errors found (" + semanticErrors.size() + " in total):");
                 for (SemanticError se : semanticErrors) {
-                    System.out.println(se.toString());
+                    System.out.println("\t" + se.toString() + ANSI_RESET);
                 }
             } else {
-                if (ast.typeCheck() instanceof ErrorType) {
-                    System.out.println("Type checking error(s) occurred.");
+                System.out.println(ANSI_RED);
+                Type typeCheck = ast.typeCheck();
+                System.out.println(ANSI_RESET);
+                if (typeCheck instanceof ErrorType) {
+                    System.out.println("[SLPC] Type error(s) occurred.");
                 } else {
                     //System.out.println(ast.toPrint(""));
                     String codegen = ast.codeGeneration();
@@ -96,10 +93,10 @@ public class Main {
                     // Code generation
                     CharStream code = CharStreams.fromString(codegen);
                     // scrittura del codice su file
-                    BufferedWriter bw = new BufferedWriter(new FileWriter("test.asm"));
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(filename + ".asm"));
                     bw.write(code.toString());
                     bw.close();
-                    System.out.println("Code generated! Assembling and running generated code.");
+                    System.out.println("[SLPC] Code generated! Assembling and running generated code.");
 
                     SVMLexer lexerASM = new SVMLexer(code);
                     CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
@@ -110,7 +107,7 @@ public class Main {
                     SVMVisitorImpl visitorSVM = new SVMVisitorImpl();
                     visitorSVM.visit(parserASM.assembly());
 
-                    System.out.println("Starting Virtual Machine...");
+                    System.out.println("[SLPC] Starting Virtual Machine...");
                     ExecuteVM vm = new ExecuteVM(visitorSVM.code);
                     vm.cpu();
                 }
