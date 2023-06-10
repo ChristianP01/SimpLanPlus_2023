@@ -32,7 +32,7 @@ public class IfNode implements Node {
         SymbolTable copiedST = new SymbolTable(symTable);
 
         errors.addAll(this.thenBranch.checkSemantics(symTable, nesting));
-        errors.addAll(this.elseBranch.checkSemantics(symTable, nesting));
+        errors.addAll(this.elseBranch.checkSemantics(copiedST, nesting));
 
         ArrayList<String> symTableInits = symTable.searchInits();
         ArrayList<String> copiedSTInits = copiedST.searchInits();

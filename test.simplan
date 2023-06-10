@@ -1,8 +1,10 @@
 int x;
-void f() {
-    if(false) {
-        x = 1;
-    }
-}
-f();
-x
+int y;
+if(true) {
+    x = 1;
+    y = 2;
+    2
+} else {
+    x = 3;
+    3
+} + if(y == 1) { 1 } else { 0 }
