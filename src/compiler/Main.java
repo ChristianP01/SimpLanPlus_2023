@@ -21,7 +21,19 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+
+
 public class Main {
+    // colori
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
     public static void main(String[] args) throws Exception {
         String filename = "test.simplan";
         FileInputStream sourceFile;
@@ -49,17 +61,20 @@ public class Main {
         parser.removeErrorListeners();
         parser.addErrorListener(listener);
 
-        System.out.println("Starting parsing process...");
+        System.out.println("[SLPC] Starting parsing process...");
 
-        // visita dell'albero concreto e ottenimento dell'ast
+        // visita dell'albero concreto e ottenimento del parse tree
         Node ast = visitor.visit(parser.prog());
 
         // scrittura su file degli errori lessicali
         listener.exportToFile(filename + "_lexicalErrors.txt");
-        System.out.println("Finished parsing process. ");
+        System.out.println("[SLPC] Finished parsing process. ");
 
         if (listener.getErrorList().size() > 0) {
-            System.out.println("Syntactic errors occurred.");
+            System.out.println("[SLPC] Lexical error(s) occurred (" + listener.getErrorList().size() + " in total):");
+            for(String e : listener.getErrorList()) {
+                System.out.println(ANSI_RED + '\t' + e + ANSI_RESET);
+            }
         }
         else {
             // Inizializzazione della symbol table "globale"
@@ -74,9 +89,9 @@ public class Main {
                 if (ast.typeCheck() instanceof ErrorType) {
                     System.out.println("Type checking error(s) occurred.");
                 } else {
-                    System.out.println(ast.toPrint(""));
+                    //System.out.println(ast.toPrint(""));
                     String codegen = ast.codeGeneration();
-                    System.out.println(codegen);
+                    //System.out.println(codegen);
 
                     // Code generation
                     CharStream code = CharStreams.fromString(codegen);
