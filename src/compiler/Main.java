@@ -29,7 +29,7 @@ public class Main {
     public static final String ANSI_RED = "\u001B[31m";
 
     public static void main(String[] args) throws Exception {
-        String filename = "test/es8.simplan";
+        String filename = "test/test.simplan";
         FileInputStream sourceFile;
 
         try {
@@ -84,7 +84,7 @@ public class Main {
                 Type typeCheck = ast.typeCheck();
                 System.out.println(ANSI_RESET);
                 if (typeCheck instanceof ErrorType) {
-                    System.out.println("[SLPC] Type error(s) occurred.");
+                    System.out.println(ANSI_RED + "[SLPC] Type error(s) occurred." + ANSI_RESET);
                 } else {
                     //System.out.println(ast.toPrint(""));
                     String codegen = ast.codeGeneration();
