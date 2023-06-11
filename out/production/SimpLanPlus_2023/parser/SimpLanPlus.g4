@@ -1,5 +1,9 @@
 grammar SimpLanPlus ;
 
+/*@lexer::members {
+    public static final int LEXICAL_CHANNEL = 30;
+}*/
+
 prog   : exp                                                        #singleExpProg
        | (dec)+ (stm)* (exp)?                                       #decStmExpProg
        ;
@@ -45,6 +49,7 @@ exp    :  INTEGER #intExp | ('true' | 'false')                          #boolExp
  * LEXER RULES
  *------------------------------------------------------------------*/
 
+
 //Numbers
 fragment DIGIT  : '0'..'9';    
 INTEGER         : DIGIT+;
@@ -57,3 +62,8 @@ ID              : CHAR (CHAR | DIGIT)* ;
 WS              : (' '|'\t'|'\n'|'\r')-> skip;
 LINECOMENTS     : '//' (~('\n'|'\r'))* -> skip;
 BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
+
+// Aggiunge gli errori lessicali ad un arraylist, presente come parametro della classe SimplanPlusLexer
+ERR     : . {
+    lexErrors.add("Invalid char: " + getText());
+} -> channel(30);

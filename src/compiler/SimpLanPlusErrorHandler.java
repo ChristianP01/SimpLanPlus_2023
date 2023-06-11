@@ -28,7 +28,6 @@ public class SimpLanPlusErrorHandler extends BaseErrorListener {
     public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol,
                             int line, int charPositionInLine, String msg,
                             RecognitionException e) {
-        //System.out.println("An error occurred at " + line + ":" + charPositionInLine + " " + msg);
         String errorString = "An error occurred at " + line + ":" + charPositionInLine + " " + msg;
         this.errorList.add(errorString);
     }
@@ -36,11 +35,5 @@ public class SimpLanPlusErrorHandler extends BaseErrorListener {
     @Override
     public String toString() {
         return String.join("\n", this.errorList);
-    }
-
-    public void exportToFile(String outputFile) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile));
-        bw.write(this.toString());
-        bw.close();
     }
 }

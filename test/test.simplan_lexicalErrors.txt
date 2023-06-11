@@ -1,1 +1,0 @@
-An error occurred at 1:6 no viable alternative at input 'inta_a'

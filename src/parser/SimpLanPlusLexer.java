@@ -9,8 +9,13 @@ import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
+import java.util.ArrayList;
+
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
 public class SimpLanPlusLexer extends Lexer {
+
+	private ArrayList<String> lexErrors = new ArrayList<>();
+
 	static { RuntimeMetaData.checkVersion("4.12.0", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -97,6 +102,10 @@ public class SimpLanPlusLexer extends Lexer {
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
+	public ArrayList<String> getLexErrors() {
+		return lexErrors;
+	}
+
 	@Override
 	public String getGrammarFileName() { return "SimpLanPlus.g4"; }
 
@@ -115,8 +124,25 @@ public class SimpLanPlusLexer extends Lexer {
 	@Override
 	public ATN getATN() { return _ATN; }
 
+	@Override
+	public void action(RuleContext _localctx, int ruleIndex, int actionIndex) {
+		switch (ruleIndex) {
+		case 33:
+			ERR_action((RuleContext)_localctx, actionIndex);
+			break;
+		}
+	}
+	private void ERR_action(RuleContext _localctx, int actionIndex) {
+		switch (actionIndex) {
+		case 0:
+			lexErrors.add("Invalid char: " + getText());
+			System.out.println("Invalid char: " + getText());
+			break;
+		}
+	}
+
 	public static final String _serializedATN =
-		"\u0004\u0000 \u00c8\u0006\uffff\uffff\u0002\u0000\u0007\u0000\u0002\u0001"+
+		"\u0004\u0000 \u00c9\u0006\uffff\uffff\u0002\u0000\u0007\u0000\u0002\u0001"+
 		"\u0007\u0001\u0002\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004"+
 		"\u0007\u0004\u0002\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007"+
 		"\u0007\u0007\u0002\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b"+
@@ -146,13 +172,13 @@ public class SimpLanPlusLexer extends Lexer {
 		"\b\u001f\n\u001f\f\u001f\u00ae\t\u001f\u0001\u001f\u0001\u001f\u0001 "+
 		"\u0001 \u0001 \u0001 \u0001 \u0001 \u0001 \u0001 \u0001 \u0005 \u00bb"+
 		"\b \n \f \u00be\t \u0001 \u0001 \u0001 \u0001 \u0001 \u0001!\u0001!\u0001"+
-		"!\u0001!\u0000\u0000\"\u0001\u0001\u0003\u0002\u0005\u0003\u0007\u0004"+
-		"\t\u0005\u000b\u0006\r\u0007\u000f\b\u0011\t\u0013\n\u0015\u000b\u0017"+
-		"\f\u0019\r\u001b\u000e\u001d\u000f\u001f\u0010!\u0011#\u0012%\u0013\'"+
-		"\u0014)\u0015+\u0016-\u0017/\u00181\u00193\u001a5\u00007\u001b9\u0000"+
+		"!\u0001!\u0001!\u0000\u0000\"\u0001\u0001\u0003\u0002\u0005\u0003\u0007"+
+		"\u0004\t\u0005\u000b\u0006\r\u0007\u000f\b\u0011\t\u0013\n\u0015\u000b"+
+		"\u0017\f\u0019\r\u001b\u000e\u001d\u000f\u001f\u0010!\u0011#\u0012%\u0013"+
+		"\'\u0014)\u0015+\u0016-\u0017/\u00181\u00193\u001a5\u00007\u001b9\u0000"+
 		";\u001c=\u001d?\u001eA\u001fC \u0001\u0000\u0006\u0002\u0000AZaz\u0003"+
 		"\u0000\t\n\r\r  \u0002\u0000\n\n\r\r\u0002\u0000**//\u0001\u0000**\u0001"+
-		"\u0000//\u00cd\u0000\u0001\u0001\u0000\u0000\u0000\u0000\u0003\u0001\u0000"+
+		"\u0000//\u00ce\u0000\u0001\u0001\u0000\u0000\u0000\u0000\u0003\u0001\u0000"+
 		"\u0000\u0000\u0000\u0005\u0001\u0000\u0000\u0000\u0000\u0007\u0001\u0000"+
 		"\u0000\u0000\u0000\t\u0001\u0000\u0000\u0000\u0000\u000b\u0001\u0000\u0000"+
 		"\u0000\u0000\r\u0001\u0000\u0000\u0000\u0000\u000f\u0001\u0000\u0000\u0000"+
@@ -236,9 +262,10 @@ public class SimpLanPlusLexer extends Lexer {
 		"\u0000\u00be\u00bc\u0001\u0000\u0000\u0000\u00bf\u00c0\u0005*\u0000\u0000"+
 		"\u00c0\u00c1\u0005/\u0000\u0000\u00c1\u00c2\u0001\u0000\u0000\u0000\u00c2"+
 		"\u00c3\u0006 \u0000\u0000\u00c3B\u0001\u0000\u0000\u0000\u00c4\u00c5\t"+
-		"\u0000\u0000\u0000\u00c5\u00c6\u0001\u0000\u0000\u0000\u00c6\u00c7\u0006"+
-		"!\u0001\u0000\u00c7D\u0001\u0000\u0000\u0000\u0007\u0000\u0096\u009d\u009f"+
-		"\u00ac\u00ba\u00bc\u0002\u0006\u0000\u0000\u0000\u0001\u0000";
+		"\u0000\u0000\u0000\u00c5\u00c6\u0006!\u0001\u0000\u00c6\u00c7\u0001\u0000"+
+		"\u0000\u0000\u00c7\u00c8\u0006!\u0002\u0000\u00c8D\u0001\u0000\u0000\u0000"+
+		"\u0007\u0000\u0096\u009d\u009f\u00ac\u00ba\u00bc\u0003\u0006\u0000\u0000"+
+		"\u0001!\u0000\u0000\u001e\u0000";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
