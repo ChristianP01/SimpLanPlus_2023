@@ -1,4 +1,0 @@
-void fun(int a) {
-    a+1
-
-fun(5)
