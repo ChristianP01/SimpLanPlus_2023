@@ -28,7 +28,7 @@ public class Main {
     public static final String ANSI_RED = "\u001B[31m";
 
     public static void main(String[] args) throws Exception {
-        String filename = "test/test.simplan";
+        String filename = "test/es1.simplan";
         FileInputStream sourceFile;
 
         try {
