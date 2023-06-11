@@ -64,6 +64,7 @@ LINECOMENTS     : '//' (~('\n'|'\r'))* -> skip;
 BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
 
 // Aggiunge gli errori lessicali ad un arraylist, presente come parametro della classe SimplanPlusLexer
+// È stato utilizzato '30' come ID del canale per evitare eventuali conflitti
 ERR     : . {
     lexErrors.add("Invalid char: " + getText());
 } -> channel(30);

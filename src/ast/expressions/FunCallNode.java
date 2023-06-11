@@ -69,7 +69,7 @@ public class FunCallNode implements Node {
                     if (!this.params.get(i).typeCheck().toString().equals(typeParams.get(i).toString())) {
                             correctParam = false;
                             System.out.println("Error on parameter #" + (i+1));
-                            System.out.println("Requested param is " + typeParams.get(i).toPrint("") +
+                            System.out.println("Required param is " + typeParams.get(i).toPrint("") +
                             "but " + this.params.get(i).typeCheck().toPrint("") + "was given.");
                     }
                 }
