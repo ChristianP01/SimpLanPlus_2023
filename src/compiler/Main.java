@@ -6,10 +6,7 @@ import ast.simplanlib.ExecuteVM;
 import ast.SVMVisitorImpl;
 import ast.types.ErrorType;
 import ast.types.Type;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
 import parser.SVMLexer;
 import parser.SVMParser;
 import parser.SimpLanPlusLexer;
@@ -20,7 +17,6 @@ import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.util.ArrayList;
-
 
 
 public class Main {
@@ -40,12 +36,13 @@ public class Main {
             return;
         }
 
-        // inizializzaziond di lexer, parser e visitor
+        // inizializzazioni di lexer, parser e visitor
         ANTLRInputStream inputStream = new ANTLRInputStream(sourceFile);
         SimpLanPlusLexer lexer = new SimpLanPlusLexer(inputStream);
         CommonTokenStream tokenList = new CommonTokenStream(lexer);
         SimpLanPlusParser parser = new SimpLanPlusParser(tokenList);
         SLPVisitor visitor = new SLPVisitor();
+
 
         // introduzione del listener per gli errori lessicali e sintattici
         SimpLanPlusErrorHandler listener = new SimpLanPlusErrorHandler();
@@ -57,7 +54,7 @@ public class Main {
 
         System.out.println("[SLPC] Starting parsing process...");
 
-        // visita dell'albero concreto e ottenimento del parse tree
+        // visita dell'albero concreto e ottenimento del ast
         Node ast = visitor.visit(parser.prog());
 
         // scrittura su file degli errori lessicali

@@ -82,7 +82,7 @@ public class ProgDecNode implements Node {
         int numVarDec = this.dec.stream().filter(d -> d instanceof DecNode).toList().size();
         codegen.append("addi SP ").append(numVarDec + 2).append("\n");
 
-        return codegen + "halt \n" + SimplanInterface.getCode();
+        return codegen + "halt\n" + SimplanInterface.getCode();
     }
 
     @Override
