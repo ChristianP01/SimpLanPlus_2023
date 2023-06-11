@@ -1,0 +1,8 @@
+int x;
+int y;
+int f(int a) {
+    x + y + a
+}
+x = 2;
+y = 3;
+f(1)

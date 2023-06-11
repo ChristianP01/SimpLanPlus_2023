@@ -1,5 +1,6 @@
 package ast;
 
+import ast.declarations.DecNode;
 import ast.simplanlib.SimplanInterface;
 import ast.types.ErrorType;
 import ast.types.Type;
@@ -74,6 +75,12 @@ public class ProgDecNode implements Node {
         }
 
         codegen.append(this.exp == null ? "" : this.exp.codeGeneration());
+
+        // svuotamento dello stack
+
+        // ottengo il numero di variabili dichiarate (le funzioni non occupano spazio sullo stack)
+        int numVarDec = this.dec.stream().filter(d -> d instanceof DecNode).toList().size();
+        codegen.append("addi SP ").append(numVarDec + 2).append("\n");
 
         return codegen + "halt \n" + SimplanInterface.getCode();
     }

@@ -35,7 +35,8 @@ public class IdNode implements Node {
         if(this.semanticData == null) {
             errors.add(new SemanticError("Variable " + this.id + " not declared."));
         } else {
-            if(!this.semanticData.isInitialized()) {
+            // si controlla se la variabile è stata inizializzata, ma solo se è stata definita nel nesting level corrente
+            if(!this.semanticData.isInitialized() && this.nestingLevel == this.semanticData.getNestingLevel()) {
                 errors.add(new SemanticError("Variable " + this.id + " not initialized."));
             }
         }
