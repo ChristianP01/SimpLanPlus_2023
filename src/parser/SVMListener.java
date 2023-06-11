@@ -1,4 +1,4 @@
-package parser;// Generated from SVM.g4 by ANTLR 4.12.0
+package parser;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
